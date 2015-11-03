@@ -1,13 +1,13 @@
 ﻿import socket
 import time
+import sys
 from random import randint
 
 HOST = ''
 PORT = 5000
 
-def main():
-    test_server = Server();
-    test_server.start()
+test_server = Server();
+test_server.start()
 
 
 #class Client():
