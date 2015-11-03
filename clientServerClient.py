@@ -6,8 +6,9 @@ from random import randint
 HOST = ''
 PORT = 5000
 
-test_server = Server();
-test_server.start()
+def main():
+    test_server = Server()
+    test_server.start()
 
 
 #class Client():
@@ -38,3 +39,5 @@ class Server():
         self.Active = False
 
 
+if __name__ == "__main__":
+    main();
