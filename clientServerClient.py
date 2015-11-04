@@ -26,8 +26,10 @@ class Server():
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.bind((HOST, PORT))
         while 1:
-            data, self.addr = s.recvfrom(1024)
-            
+            out = s.recvfrom(1024)
+            data = out[0]
+            self.addr = out[1]
+
             if not data:
                 break;
 
@@ -49,7 +51,10 @@ class Client():
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         msg = raw_input('Enter messgae: ')
         s.sendto(msg,(HOST, PORT))
-        data, addr = s.recvfrom(1024)
+        
+        out = s.recvfrom(1024)
+        data = out[0]
+        addr = out[1]
 
         print 'Server: ' + data
     def kill(self):
