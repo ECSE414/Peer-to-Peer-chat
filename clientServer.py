@@ -4,6 +4,8 @@ import sys
 import select
 from random import randint
 
+SERVER_IP = 'localhost'  #server IP
+SERVER_PORT = 6000         #server port
 
 def main():
     type = raw_input('Please enter your type: ')
@@ -15,31 +17,29 @@ def main():
         client.ID = num
         #print client.ID
         if client.ID == '1':
-            client.setupChatRecv('localhost', 5000, 'localhost', 8000)
+            client.host = 'localhost'
+            client.port = 5000
+            client.setupServerConn()
+            #client.setupChatRecv('localhost', 8000)
         elif client.ID == '2':
-            client.setupChatSend('localhost', 8000, 'localhost', 5000)
+            client.host = 'localhost'
+            client.port = 8000
+            client.setupServerConn()
+            #client.setupChatSend('localhost', 5000)
             
     elif type == 'server':
         server = Server()
         server.start()
-
-#class Client():
-#    def __init__(self):
-#        self.host = None
-#        self.sock = None
-#        self.active = True;
-    
     
 class Server():
+    for_table = { '0' : SERVER_IP + ":" + str(SERVER_PORT) }
     def __init__(self):
         self.addr = None
         self.active = True
 
     def start(self):
-        HOST = ''
-        PORT = 5000
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.bind((HOST, PORT))
+        s.bind((SERVER_IP, SERVER_PORT))
         while 1:
             out = s.recvfrom(1024)
             data = out[0]
@@ -47,25 +47,28 @@ class Server():
 
             if not data:
                 break;
-
-            answer = 'OK...' + data
+            result = data.split(str=':', 2)
+            for_table[result[2]] = result[0] + ":" + result[1]
+            answer = 'OK...' + result[0] + ' port...' + result[1]
             s.sendto(answer, self.addr)
             print "[" + self.addr[0] + ":" + str(self.addr[1]) + "] :: " + data
+            print for_table
     def kill(self):
         self.active = False
         s.close()
 
 class Client():
     def __init__(self):
-        #self.host = None
+        self.host = None
+        self.port = None
         self.ID = None
         self.active = True
 
-    def setupChatRecv(self, host, port, dest, dest_port):
+    def setupChatRecv(self, dest, dest_port):
         #self.kill()
         self.active = True
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.bind((host, port))
+        s.bind((self.host, self.port))
         x = 1
         while 1:
             while (x == 1):
@@ -90,11 +93,11 @@ class Client():
 
                 print data
                 x = 1
-    def setupChatSend(self, host, port, dest, dest_port):
+    def setupChatSend(self, dest, dest_port):
         #self.kill()
         self.active = True
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.bind((host, port))
+        s.bind((self.host, self.port))
         x = 0
         while 1:
             while (x == 1):
@@ -119,19 +122,18 @@ class Client():
 
                 print data
                 x = 1
+
     def setupServerConn(self):
-        HOST = 'localhost'
-        PORT = 5000
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         while 1:
-            msg = raw_input('Enter message: ')
-            s.sendto(msg,(HOST, PORT))
+            msg = self.host + ':' + str(self.port) + ':' + str(self.ID)
+            s.sendto(msg,(SERVER_IP, SERVER_PORT))
         
             out = s.recvfrom(1024)
             data = out[0]
             addr = out[1]
 
-            print 'Server: ' + data
+            print 'Your info: ' + data
     def kill(self):
         self.active = False
         s.close()
