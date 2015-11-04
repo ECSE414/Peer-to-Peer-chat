@@ -22,14 +22,14 @@ def main():
             client.setupServerConn()
             to = raw_input('Who would you like to contact?')
             conn = client.requestBuddy(to)
-            client.setupChatSend(conn[0], conn[1])
+            client.setupChatSend(conn[0], int(conn[1]))
         elif client.ID == '2':
             client.host = 'localhost'
             client.port = 8000
             client.setupServerConn()
             to = raw_input('Who would you like to contact?')
             conn = client.requestBuddy(to)
-            client.setupChatRecv(conn[0], conn[1])
+            client.setupChatRecv(conn[0], int(conn[1]))
             
     elif type == 'server':
         server = Server()
