@@ -20,12 +20,15 @@ def main():
             client.host = 'localhost'
             client.port = 5000
             client.setupServerConn()
-            #client.setupChatRecv('localhost', 8000)
+            to = raw_input('Who would you like to contact?')
+            conn = client.requestBuddy(to)
+            client.setupChatSend(conn[0], conn[1])
         elif client.ID == '2':
             client.host = 'localhost'
             client.port = 8000
             client.setupServerConn()
-            #client.setupChatSend('localhost', 5000)
+            conn = client.requestBuddy(to)
+            client.setupChatRecv('localhost', 5000)
             
     elif type == 'server':
         server = Server()
@@ -47,9 +50,12 @@ class Server():
             if not data:
                 break;
             result = data.split(':', 2)
-            #global for_table
-            self.for_table[result[2]] = result[0] + ":" + result[1]
-            answer = 'IP...' + result[0] + ' port...' + result[1]
+            if data == result[0]:
+                answer = 'requested buddy info: ' + for_table[data]
+            else:
+                self.for_table[result[2]] = result[0] + ":" + result[1]
+                answer = 'IP...' + result[0] + ' port...' + result[1]
+
             s.sendto(answer, self.addr)
             print "[" + self.addr[0] + ":" + str(self.addr[1]) + "] :: " + data
             print self.for_table
@@ -62,32 +68,33 @@ class Client():
         self.host = None
         self.port = None
         self.ID = None
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.active = True
 
     def setupChatRecv(self, dest, dest_port):
         #self.kill()
         self.active = True
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.bind((self.host, self.port))
+        #s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.s.bind((self.host, self.port))
         x = 1
         while 1:
             while (x == 1):
-                out = s.recvfrom(1024)
+                out = self.s.recvfrom(1024)
                 data = out[0]
                 addr = out[1]
 
                 if not data:
                     break;
                 answer = "message received..."
-                s.sendto(answer, (dest, dest_port))
+                self.s.sendto(answer, (dest, dest_port))
                 print "[" + dest + ":" + str(dest_port) + "] ::" + data
                 x = 0
             while (x == 0):
                 msg = raw_input('Enter message to send: ')
 
-                s.sendto(msg, (dest, dest_port))
+                self.s.sendto(msg, (dest, dest_port))
 
-                out = s.recvfrom(1024)
+                out = self.s.recvfrom(1024)
                 data = out[0]
                 addr = out[1]
 
@@ -96,27 +103,26 @@ class Client():
     def setupChatSend(self, dest, dest_port):
         #self.kill()
         self.active = True
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.bind((self.host, self.port))
+        self.s.bind((self.host, self.port))
         x = 0
         while 1:
             while (x == 1):
-                out = s.recvfrom(1024)
+                out = self.s.recvfrom(1024)
                 data = out[0]
                 addr = out[1]
 
                 if not data:
                     break;
                 answer = "message received..."
-                s.sendto(answer, (dest, dest_port))
+                self.s.sendto(answer, (dest, dest_port))
                 print "[" + dest + ":" + str(dest_port) + "] ::" + data
                 x = 0
             while (x == 0):
                 msg = raw_input('Enter message to send: ')
 
-                s.sendto(msg, (dest, dest_port))
+                self.s.sendto(msg, (dest, dest_port))
 
-                out = s.recvfrom(1024)
+                out = self.s.recvfrom(1024)
                 data = out[0]
                 addr = out[1]
 
@@ -124,19 +130,33 @@ class Client():
                 x = 1
 
     def setupServerConn(self):
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
         msg = self.host + ':' + str(self.port) + ':' + str(self.ID)
-        s.sendto(msg,(SERVER_IP, SERVER_PORT))
+        self.s.sendto(msg,(SERVER_IP, SERVER_PORT))
         
-        out = s.recvfrom(1024)
+        out = self.s.recvfrom(1024)
         data = out[0]
         addr = out[1]
 
         print 'Your info: ' + data
+
+
+    def requestBuddy(self, who):
+       msg = str(who)
+
+       self.s.sendto(msg, (SERVER_IP, SERVER_PORT))
+
+       out = self.s.recvfrom(1024)
+
+       data = out[0]
+       addr = out[1]
+
+       print 'requested information: ' + data
+       result = data.split(':', 1)
+       return result
     def kill(self):
         self.active = False
-        s.close()
+        self.s.close()
 
 if __name__ == "__main__":
     main()
