@@ -7,6 +7,7 @@ from random import randint
 def main():
     type = raw_input('Please enter your type: ')
     type = type.lower()
+    print type
     if type == 'client':
         client = Client()
         client.start
