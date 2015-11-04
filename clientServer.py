@@ -2,7 +2,7 @@
 import time
 import sys
 import select
-from random import randint
+
 
 SERVER_IP = 'localhost'  #server IP
 SERVER_PORT = 6000         #server port
@@ -49,7 +49,7 @@ class Server():
             result = data.split(':', 2)
             #global for_table
             self.for_table[result[2]] = result[0] + ":" + result[1]
-            answer = 'OK...' + result[0] + ' port...' + result[1]
+            answer = 'IP...' + result[0] + ' port...' + result[1]
             s.sendto(answer, self.addr)
             print "[" + self.addr[0] + ":" + str(self.addr[1]) + "] :: " + data
             print self.for_table
@@ -125,15 +125,15 @@ class Client():
 
     def setupServerConn(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        while 1:
-            msg = self.host + ':' + str(self.port) + ':' + str(self.ID)
-            s.sendto(msg,(SERVER_IP, SERVER_PORT))
-        
-            out = s.recvfrom(1024)
-            data = out[0]
-            addr = out[1]
 
-            print 'Your info: ' + data
+        msg = self.host + ':' + str(self.port) + ':' + str(self.ID)
+        s.sendto(msg,(SERVER_IP, SERVER_PORT))
+        
+        out = s.recvfrom(1024)
+        data = out[0]
+        addr = out[1]
+
+        print 'Your info: ' + data
     def kill(self):
         self.active = False
         s.close()
