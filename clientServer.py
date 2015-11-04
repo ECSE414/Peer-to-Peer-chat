@@ -32,11 +32,10 @@ def main():
         server.start()
     
 class Server():
-    for_table = { '0' : SERVER_IP + ":" + str(SERVER_PORT) };
     def __init__(self):
         self.addr = None
         self.active = True
-
+        self.for_table = { '0' : SERVER_IP + ":" + str(SERVER_PORT) };
     def start(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.bind((SERVER_IP, SERVER_PORT))
@@ -49,11 +48,11 @@ class Server():
                 break;
             result = data.split(':', 2)
             #global for_table
-            for_table[result[2]] = result[0] + ":" + result[1]
+            self.for_table[result[2]] = result[0] + ":" + result[1]
             answer = 'OK...' + result[0] + ' port...' + result[1]
             s.sendto(answer, self.addr)
             print "[" + self.addr[0] + ":" + str(self.addr[1]) + "] :: " + data
-            print for_table
+            print self.for_table
     def kill(self):
         self.active = False
         s.close()
