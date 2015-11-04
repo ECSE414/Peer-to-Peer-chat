@@ -34,7 +34,7 @@ class Server():
                 break;
 
             answer = 'OK...' + data
-            s.sendto(answer, addr)
+            s.sendto(answer, self.addr)
             print "[" + addr[0] + ":" + str(addr[1]) + "] :: " + data
     def kill(self):
         self.active = False
