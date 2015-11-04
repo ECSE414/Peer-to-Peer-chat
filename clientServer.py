@@ -10,7 +10,7 @@ def main():
     if type == 'client':
         client = Client()
         client.start
-    elif tpye == 'server':
+    elif type == 'server':
         server = Server()
         server.start
 
