@@ -32,7 +32,7 @@ def main():
         server.start()
     
 class Server():
-    for_table = { '0' : SERVER_IP + ":" + str(SERVER_PORT) }
+    for_table = { '0' : SERVER_IP + ":" + str(SERVER_PORT) };
     def __init__(self):
         self.addr = None
         self.active = True
@@ -48,7 +48,7 @@ class Server():
             if not data:
                 break;
             result = data.split(':', 2)
-            global for_table
+            #global for_table
             for_table[result[2]] = result[0] + ":" + result[1]
             answer = 'OK...' + result[0] + ' port...' + result[1]
             s.sendto(answer, self.addr)
