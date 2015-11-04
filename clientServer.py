@@ -5,8 +5,14 @@ from random import randint
 
 
 def main():
-    test_client = Client()
-    test_client.start()
+    type = raw_input('Please enter your type: ')
+    type = type.lower()
+    if type == 'client':
+        client = Client()
+        client.start
+    elif tpye == 'server':
+        server = Server()
+        server.start
 
 #class Client():
 #    def __init__(self):
