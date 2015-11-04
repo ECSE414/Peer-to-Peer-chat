@@ -62,7 +62,7 @@ class Client():
         self.active = True
 
     def setupChatRecv(self, host, port, dest, dest_port):
-        self.kill()
+        #self.kill()
         self.active = True
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.bind((host, port))
@@ -91,7 +91,7 @@ class Client():
                 print "[" + addr[0] + ":" + str(addr[1]) + "] :: " + data
                 x = 1
     def setupChatSend(self, host, port, dest, dest_port):
-        self.kill()
+        #self.kill()
         self.active = True
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.bind((host, port))
