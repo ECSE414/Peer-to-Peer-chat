@@ -41,7 +41,7 @@ class Server():
 class Client():
     def __init__(self):
         #self.host = None
-        self.sock = None
+        #self.sock = None
         self.active = True
 
     def start(self):

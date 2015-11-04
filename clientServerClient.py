@@ -43,7 +43,7 @@ class Client():
         #self.host = None
         self.sock = None
         self.active = True
-    def stert(self):
+    def start(self):
         HOST = 'localhost'
         PORT = 5000
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
