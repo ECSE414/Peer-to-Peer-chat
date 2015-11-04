@@ -10,10 +10,10 @@ def main():
     print type
     if type == 'client':
         client = Client()
-        client.start
+        client.start()
     elif type == 'server':
         server = Server()
-        server.start
+        server.start()
 
 #class Client():
 #    def __init__(self):
