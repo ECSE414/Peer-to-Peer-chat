@@ -48,7 +48,8 @@ class Server():
             if not data:
                 break;
             result = data.split(':', 2)
-            global for_table[result[2]] = result[0] + ":" + result[1]
+            global for_table
+            for_table[result[2]] = result[0] + ":" + result[1]
             answer = 'OK...' + result[0] + ' port...' + result[1]
             s.sendto(answer, self.addr)
             print "[" + self.addr[0] + ":" + str(self.addr[1]) + "] :: " + data
