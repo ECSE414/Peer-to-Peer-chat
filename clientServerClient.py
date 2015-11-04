@@ -3,13 +3,10 @@ import time
 import sys
 from random import randint
 
-HOST = ''
-PORT = 5000
 
 def main():
-    test_server = Server()
-    test_server.start()
-
+    test_client = Client()
+    test_client.start()
 
 #class Client():
 #    def __init__(self):
@@ -21,9 +18,11 @@ def main():
 class Server():
     def __init__(self):
         self.addr = None
-        self.Active = True
+        self.active = True
 
     def start(self):
+        HOST = ''
+        PORT = 5000
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.bind((HOST, PORT))
         while 1:
@@ -36,8 +35,26 @@ class Server():
             s.sendto(answer, addr)
             print "[" + addr[0] + ":" + str(addr[1]) + "] :: " + data
     def kill(self):
-        self.Active = False
+        self.active = False
+        s.close()
 
+class Client():
+    def __init__(self):
+        #self.host = None
+        self.sock = None
+        self.active = True
+    def stert(self):
+        HOST = 'localhost'
+        PORT = 5000
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        msg = raw_input('Enter messgae: ')
+        s.sendto(msg,(HOST, PORT))
+        data, addr = s.recvfrom(1024)
+
+        print 'Server: ' + data
+    def kill(self):
+        self.active = False
+        s.close()
 
 if __name__ == "__main__":
     main();
