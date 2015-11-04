@@ -27,6 +27,7 @@ def main():
             client.host = 'localhost'
             client.port = 8000
             client.setupServerConn()
+            to = raw_input('Who would you like to contact?')
             conn = client.requestBuddy(to)
             client.setupChatRecv('localhost', 5000)
             
