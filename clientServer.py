@@ -13,9 +13,10 @@ def main():
         num = raw_input('Please enter your numerical id: ')
         client = Client()
         client.ID = num
-        if client.ID == 1:
+        #print client.ID
+        if client.ID == '1':
             client.setupChatRecv('localhost', 5000, 'localhost', 8000)
-        elif client.ID == 2:
+        elif client.ID == '2':
             client.setupChatSend('localhost', 8000, 'localhost', 5000)
             
     elif type == 'server':
