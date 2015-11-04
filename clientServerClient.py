@@ -49,14 +49,15 @@ class Client():
         HOST = 'localhost'
         PORT = 5000
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        msg = raw_input('Enter messgae: ')
-        s.sendto(msg,(HOST, PORT))
+        while 1:
+            msg = raw_input('Enter messgae: ')
+            s.sendto(msg,(HOST, PORT))
         
-        out = s.recvfrom(1024)
-        data = out[0]
-        addr = out[1]
+            out = s.recvfrom(1024)
+            data = out[0]
+            addr = out[1]
 
-        print 'Server: ' + data
+            print 'Server: ' + data
     def kill(self):
         self.active = False
         s.close()
