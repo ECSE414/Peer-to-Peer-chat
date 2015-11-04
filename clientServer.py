@@ -22,14 +22,14 @@ def main():
             client.setupServerConn()
             to = raw_input('Who would you like to contact?')
             conn = client.requestBuddy(to)
-            client.setupChatSend(conn[0], conn[1])
+            client.setupChatSend(conn[0], int(conn[1]))
         elif client.ID == '2':
             client.host = 'localhost'
             client.port = 8000
             client.setupServerConn()
             to = raw_input('Who would you like to contact?')
             conn = client.requestBuddy(to)
-            client.setupChatRecv(conn[0], conn[1])
+            client.setupChatRecv(conn[0], int(conn[1]))
             
     elif type == 'server':
         server = Server()
@@ -52,7 +52,7 @@ class Server():
                 break;
             result = data.split(':', 2)
             if data == result[0]:
-                answer = 'requested buddy info: ' + self.for_table[data]
+                answer = self.for_table[data]
             else:
                 self.for_table[result[2]] = result[0] + ":" + result[1]
                 answer = 'IP...' + result[0] + ' port...' + result[1]
@@ -77,7 +77,6 @@ class Client():
         self.active = True
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.s.bind((self.host, self.port))
-        dest_port = int(dest_port)
         x = 1
         while 1:
             while (x == 1):
@@ -107,7 +106,6 @@ class Client():
         self.active = True
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.s.bind((self.host, self.port))
-        dest_port = int(dest_port)
         x = 0
         while 1:
             while (x == 1):
