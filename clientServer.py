@@ -77,7 +77,7 @@ class Client():
                     break;
                 answer = "message received..."
                 s.sendto(answer, (dest, dest_port))
-                print "[" + dest + ":" + dest_port + "] ::" + data
+                print "[" + dest + ":" + str(dest_port) + "] ::" + data
                 x = 0
             while (x == 0):
                 msg = raw_input('Enter message to send: ')
@@ -106,7 +106,7 @@ class Client():
                     break;
                 answer = "message received..."
                 s.sendto(answer, (dest, dest_port))
-                print "[" + dest + ":" + dest_port + "] ::" + data
+                print "[" + dest + ":" + str(dest_port) + "] ::" + data
                 x = 0
             while (x == 0):
                 msg = raw_input('Enter message to send: ')
