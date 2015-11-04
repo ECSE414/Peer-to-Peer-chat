@@ -71,7 +71,7 @@ class Client():
             while (x == 1):
                 out = s.recvfrom(1024)
                 data = out[0]
-                addr = input[1]
+                addr = out[1]
 
                 if not data:
                     break;
@@ -100,7 +100,7 @@ class Client():
             while (x == 1):
                 out = s.recvfrom(1024)
                 data = out[0]
-                addr = input[1]
+                addr = out[1]
 
                 if not data:
                     break;
