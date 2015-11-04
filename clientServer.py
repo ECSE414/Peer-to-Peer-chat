@@ -88,7 +88,7 @@ class Client():
                 data = out[0]
                 addr = out[1]
 
-                print "[" + addr[0] + ":" + str(addr[1]) + "] :: " + data
+                print data
                 x = 1
     def setupChatSend(self, host, port, dest, dest_port):
         #self.kill()
@@ -117,7 +117,7 @@ class Client():
                 data = out[0]
                 addr = out[1]
 
-                print "[" + addr[0] + ":" + str(addr[1]) + "] :: " + data
+                print data
                 x = 1
     def setupServerConn(self):
         HOST = 'localhost'
