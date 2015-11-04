@@ -52,7 +52,7 @@ class Server():
                 break;
             result = data.split(':', 2)
             if data == result[0]:
-                answer = 'requested buddy info: ' + for_table[data]
+                answer = 'requested buddy info: ' + self.for_table[data]
             else:
                 self.for_table[result[2]] = result[0] + ":" + result[1]
                 answer = 'IP...' + result[0] + ' port...' + result[1]
