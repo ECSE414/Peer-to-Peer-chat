@@ -29,7 +29,7 @@ def main():
             client.setupServerConn()
             to = raw_input('Who would you like to contact?')
             conn = client.requestBuddy(to)
-            client.setupChatRecv('localhost', 5000)
+            client.setupChatRecv(conn[0], conn[1])
             
     elif type == 'server':
         server = Server()
@@ -73,9 +73,9 @@ class Client():
         self.active = True
 
     def setupChatRecv(self, dest, dest_port):
-        #self.kill()
+        self.kill()
         self.active = True
-        #s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.s.bind((self.host, self.port))
         x = 1
         while 1:
@@ -102,8 +102,9 @@ class Client():
                 print data
                 x = 1
     def setupChatSend(self, dest, dest_port):
-        #self.kill()
+        self.kill()
         self.active = True
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.s.bind((self.host, self.port))
         x = 0
         while 1:
