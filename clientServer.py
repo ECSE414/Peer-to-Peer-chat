@@ -116,7 +116,7 @@ class Client():
                 data = out[0]
                 addr = out[1]
 
-                print "[" + addr[0] ":" str(addr[1]) + "] :: " + data
+                print "[" + addr[0] + ":" + str(addr[1]) + "] :: " + data
                 x = 1
     def setupServerConn(self):
         HOST = 'localhost'
