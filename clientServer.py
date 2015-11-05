@@ -64,7 +64,7 @@ class Server():
                 answer = 'IP...' + result[0] + ' port...' + result[1]
             
             print int(result[1])
-            s.sendto(answer, (result[0], int(result[1]))
+            s.sendto(answer, (result[0], int(result[1])))
             print "[" + self.addr[0] + ":" + str(self.addr[1]) + "] :: " + data
             print self.for_table
     def kill(self):
