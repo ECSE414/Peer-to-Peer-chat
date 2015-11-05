@@ -77,34 +77,32 @@ class Client():
         self.active = True
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.s.bind((self.host, self.port))
-        x = 1
-        msg = '\n'
+        #x = 1
         while 1:
-            print 'Enter message to send: '
-            msg = sys.stdin.readline()
-            print msg
-            if (msg == '\n'):
-                out = self.s.recvfrom(1024)
-                data = out[0]
-                addr = out[1]
+            print 'Enter a message to send'
+            i,o,e = select.select([sys.stdin],[],[],0.0001)
+            for s in i:
+                if s != sys.stdin:
+                    out = self.s.recvfrom(1024)
+                    data = out[0]
+                    addr = out[1]
 
-                if not data:
-                    break;
-                answer = "message received..."
-                self.s.sendto(answer, (dest, dest_port))
-                print "[" + dest + ":" + str(dest_port) + "] ::" + data
-                x = 0
-            if(msg != '\n'):
-                
-                self.s.sendto(msg, (dest, dest_port))
+                    if not data:
+                        continue;
+                    answer = "message received..."
+                    self.s.sendto(answer, (dest, dest_port))
+                    print "[" + dest + ":" + str(dest_port) + "] ::" + data
+                    #x = 0
+                elif s == sys.stdin:
+                    msg = raw_input(' ')
+                    self.s.sendto(msg, (dest, dest_port))
 
-                out = self.s.recvfrom(1024)
-                data = out[0]
-                addr = out[1]
+                    out = self.s.recvfrom(1024)
+                    data = out[0]
+                    addr = out[1]
 
-                print data
-                x = 1
-                msg = '\n'
+                    print data
+                    #x = 1
     def setupChatSend(self, dest, dest_port):
         self.kill()
         self.active = True
