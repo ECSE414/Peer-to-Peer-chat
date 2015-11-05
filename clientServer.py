@@ -94,7 +94,7 @@ class Client():
                     print data
                     print 'Enter a message to send'
                     #x = 1
-               else:
+                else:
                     out = self.s.recvfrom(1024)
                     data = out[0]
                     addr = out[1]
