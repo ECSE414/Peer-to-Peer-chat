@@ -8,7 +8,7 @@ TIMEOUT = 1000
 READ_ONLY = select.POLLIN | select.POLLPRI | select.POLLHUP | select.POLLERR
 READ_WRITE = READ_ONLY | select.POLLOUT
 
-SERVER_IP = 'localhost'  #server IP
+SERVER_IP = '132.206.51.22'  #server IP
 SERVER_PORT = 6000         #server port
 
 def main():
@@ -22,14 +22,14 @@ def main():
         client.ID = num
         #print client.ID
         if client.ID == '1':
-            client.host = 'localhost'
+            client.host = socket.gethostbyname(socket.gethostname())
             client.port = 5000
             client.setupServerConn()
             to = raw_input('Who would you like to contact?')
             conn = client.requestBuddy(to)
             client.setupChatSend(conn[0], int(conn[1]))
         elif client.ID == '2':
-            client.host = 'localhost'
+            client.host = socket.gethostbyname(socket.gethostname())
             client.port = 8000
             client.setupServerConn()
             to = raw_input('Who would you like to contact?')
