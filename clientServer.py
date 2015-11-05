@@ -59,12 +59,12 @@ class Server():
             result = data.split(':', 2)
             if data == result[0]:
                 answer = self.for_table[data]
-                send_addr = self.for_table[data].split(':', 1)
-                s.sendto(answer, (send_addr[0], int(send_addr[1])))
             else:
                 self.for_table[result[2]] = result[0] + ":" + result[1]
                 answer = 'IP...' + result[0] + ' port...' + result[1]
-                s.sendto(answer, (result[0], int(result[1])))
+                
+            
+            s.sendto(answer, (self.addr[0], int(self.addr[1])))
             #print int(result[1])
             
             print "[" + self.addr[0] + ":" + str(self.addr[1]) + "] :: " + data
