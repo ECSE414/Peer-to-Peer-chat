@@ -83,18 +83,7 @@ class Client():
             
             i,o,e = select.select([sys.stdin],[],[],0.0001)
             for s in i:
-                if s != sys.stdin:
-                    out = self.s.recvfrom(1024)
-                    data = out[0]
-                    addr = out[1]
-
-                    if not data:
-                        continue
-                    answer = "message received..."
-                    self.s.sendto(answer, (dest, dest_port))
-                    print "[" + dest + ":" + str(dest_port) + "] ::" + data
-                    #x = 0
-                elif s == sys.stdin:
+                if s == sys.stdin:
                     msg = raw_input(' ')
                     self.s.sendto(msg, (dest, dest_port))
 
@@ -105,6 +94,18 @@ class Client():
                     print data
                     print 'Enter a message to send'
                     #x = 1
+               else:
+                    out = self.s.recvfrom(1024)
+                    data = out[0]
+                    addr = out[1]
+
+                    if not data:
+                        continue
+                    answer = "message received..."
+                    self.s.sendto(answer, (dest, dest_port))
+                    print "[" + dest + ":" + str(dest_port) + "] ::" + data
+                    #x = 0
+                
     def setupChatSend(self, dest, dest_port):
         self.kill()
         self.active = True
