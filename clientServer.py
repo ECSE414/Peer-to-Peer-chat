@@ -80,7 +80,8 @@ class Client():
         x = 1
         while 1:
             msg = None
-            msg = raw_input('Enter message to send: ')
+            inp = raw_input('Enter message to send: ')
+            msg = inp
             while (msg == None):
                 out = self.s.recvfrom(1024)
                 data = out[0]
