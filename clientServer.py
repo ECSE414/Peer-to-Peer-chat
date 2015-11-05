@@ -169,7 +169,7 @@ class Client():
                 print data
                 x = 1
     def setupServerConn(self):
-
+        s.bind((self.host, self.port))
         msg = self.host + ':' + str(self.port) + ':' + str(self.ID)
         self.s.sendto(msg,(SERVER_IP, SERVER_PORT))
         
