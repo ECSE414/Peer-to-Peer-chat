@@ -89,7 +89,7 @@ class Client():
                     addr = out[1]
 
                     if not data:
-                        continue;
+                        continue
                     answer = "message received..."
                     self.s.sendto(answer, (dest, dest_port))
                     print "[" + dest + ":" + str(dest_port) + "] ::" + data
