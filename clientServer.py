@@ -12,6 +12,7 @@ SERVER_IP = 'localhost'  #server IP
 SERVER_PORT = 6000         #server port
 
 def main():
+    print socket.gethostbyname(socket.gethostname())
     type = raw_input('Please enter your type: ')
     type = type.lower()
     #print type
