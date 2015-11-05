@@ -3,6 +3,10 @@ import time
 import sys
 import select
 
+TIMEOUT = 1000
+#common flags
+READ_ONLY = select.POLLIN | select.POLLPRI | select.POLLHUP | select.POLLERR
+READ_WRITE = READ_ONLY | select.POLLOUT
 
 SERVER_IP = 'localhost'  #server IP
 SERVER_PORT = 6000         #server port
@@ -40,6 +44,7 @@ class Server():
         self.addr = None
         self.active = True
         self.for_table = { '0' : SERVER_IP + ":" + str(SERVER_PORT) };
+        
     def start(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.bind((SERVER_IP, SERVER_PORT))
@@ -70,6 +75,7 @@ class Client():
         self.port = None
         self.ID = None
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.poller = select.poll()
         self.active = True
 
     def setupChatRecv(self, dest, dest_port):
@@ -130,7 +136,35 @@ class Client():
 
                 print data
                 x = 1
+    def setupChat(self, dest, dest_port):
+        self.kill()
+        self.active = True
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.s.bind((self.host, self.port))
+        x = 1
+        while 1:
+            while (x == 1):
+                out = self.s.recvfrom(1024)
+                data = out[0]
+                addr = out[1]
 
+                if not data:
+                    break;
+                answer = "message received..."
+                self.s.sendto(answer, (dest, dest_port))
+                print "[" + dest + ":" + str(dest_port) + "] ::" + data
+                x = 0
+            while (x == 0):
+                msg = raw_input('Enter message to send: ')
+
+                self.s.sendto(msg, (dest, dest_port))
+
+                out = self.s.recvfrom(1024)
+                data = out[0]
+                addr = out[1]
+
+                print data
+                x = 1
     def setupServerConn(self):
 
         msg = self.host + ':' + str(self.port) + ':' + str(self.ID)
