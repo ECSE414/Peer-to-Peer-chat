@@ -107,6 +107,7 @@ class Client():
                 addr = out[1]
 
                 print data
+                print addr
                 x = 1
     def setupChatSend(self, dest, dest_port):
         self.kill()
@@ -148,7 +149,7 @@ class Client():
                 out = self.s.recvfrom(1024)
                 data = out[0]
                 addr = out[1]
-
+                print addr
                 if not data:
                     break;
                 answer = "message received..."
