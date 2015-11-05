@@ -81,7 +81,7 @@ class Client():
         print 'Enter a message to send'
         while 1:
             
-            i,o,e = select.select([sys.stdin],[],[],0.0001)
+            i,o,e = select.select([sys.stdin],[],[],0.000001)
             for s in i:
                 if s == sys.stdin:
                     msg = raw_input(' ')
