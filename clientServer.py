@@ -22,14 +22,14 @@ def main():
             client.setupServerConn()
             to = raw_input('Who would you like to contact?')
             conn = client.requestBuddy(to)
-            client.setupChat(conn[0], int(conn[1]))
+            client.setupChatSend(conn[0], int(conn[1]))
         elif client.ID == '2':
             client.host = 'localhost'
             client.port = 8000
             client.setupServerConn()
             to = raw_input('Who would you like to contact?')
             conn = client.requestBuddy(to)
-            client.setupChat(conn[0], int(conn[1]))
+            client.setupChatRecv(conn[0], int(conn[1]))
             
     elif type == 'server':
         server = Server()
@@ -72,40 +72,35 @@ class Client():
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.active = True
 
-    def setupChat(self, dest, dest_port):
+    def setupChatRecv(self, dest, dest_port):
         self.kill()
         self.active = True
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.s.bind((self.host, self.port))
-        #x = 1
-        print 'Enter a message to send'
+        x = 1
         while 1:
-            
-            i,o,e = select.select([sys.stdin],[],[],0.000001)
-            for s in i:
-                if s == sys.stdin:
-                    msg = raw_input(' ')
-                    self.s.sendto(msg, (dest, dest_port))
+            while (x == 1):
+                out = self.s.recvfrom(1024)
+                data = out[0]
+                addr = out[1]
 
-                    out = self.s.recvfrom(1024)
-                    data = out[0]
-                    addr = out[1]
+                if not data:
+                    break;
+                answer = "message received..."
+                self.s.sendto(answer, (dest, dest_port))
+                print "[" + dest + ":" + str(dest_port) + "] ::" + data
+                x = 0
+            while (x == 0):
+                msg = raw_input('Enter message to send: ')
 
-                    print data
-                    print 'Enter a message to send'
-                    #x = 1
-                else:
-                    out = self.s.recvfrom(1024)
-                    data = out[0]
-                    addr = out[1]
+                self.s.sendto(msg, (dest, dest_port))
 
-                    if not data:
-                        continue
-                    answer = "message received..."
-                    self.s.sendto(answer, (dest, dest_port))
-                    print "[" + dest + ":" + str(dest_port) + "] ::" + data
-                    #x = 0
-                
+                out = self.s.recvfrom(1024)
+                data = out[0]
+                addr = out[1]
+
+                print data
+                x = 1
     def setupChatSend(self, dest, dest_port):
         self.kill()
         self.active = True
