@@ -78,8 +78,9 @@ class Client():
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.s.bind((self.host, self.port))
         #x = 1
+        print 'Enter a message to send'
         while 1:
-            print 'Enter a message to send'
+            
             i,o,e = select.select([sys.stdin],[],[],0.0001)
             for s in i:
                 if s != sys.stdin:
@@ -102,6 +103,7 @@ class Client():
                     addr = out[1]
 
                     print data
+                    print 'Enter a message to send'
                     #x = 1
     def setupChatSend(self, dest, dest_port):
         self.kill()
