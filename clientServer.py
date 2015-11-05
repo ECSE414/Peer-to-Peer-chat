@@ -78,12 +78,12 @@ class Client():
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.s.bind((self.host, self.port))
         x = 1
-        msg = ''
+        msg = '\n'
         while 1:
             print 'Enter message to send: '
             msg = sys.stdin.readline()
             print msg
-            while (msg == ''):
+            if (msg == '\n'):
                 out = self.s.recvfrom(1024)
                 data = out[0]
                 addr = out[1]
@@ -94,7 +94,7 @@ class Client():
                 self.s.sendto(answer, (dest, dest_port))
                 print "[" + dest + ":" + str(dest_port) + "] ::" + data
                 x = 0
-            while(msg != ''):
+            if(msg != '\n'):
                 
                 self.s.sendto(msg, (dest, dest_port))
 
@@ -104,7 +104,7 @@ class Client():
 
                 print data
                 x = 1
-                msg = ''
+                msg = '\n'
     def setupChatSend(self, dest, dest_port):
         self.kill()
         self.active = True
