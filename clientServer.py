@@ -80,9 +80,8 @@ class Client():
         x = 1
         while 1:
             msg = None
-            inp = raw_input('Enter message to send: ')
-            msg = inp
             while (msg == None):
+                msg = raw_input('Enter message to send: ')
                 out = self.s.recvfrom(1024)
                 data = out[0]
                 addr = out[1]
@@ -93,7 +92,7 @@ class Client():
                 self.s.sendto(answer, (dest, dest_port))
                 print "[" + dest + ":" + str(dest_port) + "] ::" + data
                 x = 0
-            if msg != None:
+            while(msg != None):
                 
                 self.s.sendto(msg, (dest, dest_port))
 
