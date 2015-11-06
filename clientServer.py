@@ -2,6 +2,7 @@
 import time
 import sys
 import select
+import datetime
 
 TIMEOUT = 1000
 #common flags
@@ -27,14 +28,14 @@ def main():
             client.setupServerConn()
             to = raw_input('Who would you like to contact?')
             conn = client.requestBuddy(to)
-            client.setupChatSend(conn[0], int(conn[1]))
+            client.setupChat(conn[0], int(conn[1]))
         elif client.ID == '2':
             client.host = socket.gethostbyname(socket.gethostname())
             client.port = 8000
             client.setupServerConn()
             to = raw_input('Who would you like to contact?')
             conn = client.requestBuddy(to)
-            client.setupChatRecv(conn[0], int(conn[1]))
+            client.setupChat(conn[0], int(conn[1]))
             
     elif type == 'server':
         server = Server()
@@ -79,7 +80,7 @@ class Client():
         self.port = None
         self.ID = None
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.poller = select.poll()
+        #self.poller = select.poll()
         self.active = True
 
     def setupChatRecv(self, dest, dest_port):
@@ -141,35 +142,39 @@ class Client():
 
                 print data
                 x = 1
+    def getLine():
+        i,o,e = select.select([sys.stdin],[],[],0.0001)
+        for s in i:
+            if s == sys.stdin:
+                input = sys.stdin.readline()
+                return input
+        return False
     def setupChat(self, dest, dest_port):
         self.kill()
         self.active = True
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.s.bind((self.host, self.port))
-        x = 1
+        self.s.setblocking(False)
+
+        #x = 1
         while 1:
-            while (x == 1):
+
+            try:
                 out = self.s.recvfrom(1024)
                 data = out[0]
                 addr = out[1]
                 print addr
-                if not data:
-                    break;
-                answer = "message received..."
-                self.s.sendto(answer, (dest, dest_port))
-                print "[" + dest + ":" + str(dest_port) + "] ::" + data
-                x = 0
-            while (x == 0):
-                msg = raw_input('Enter message to send: ')
-
-                self.s.sendto(msg, (dest, dest_port))
-
-                out = self.s.recvfrom(1024)
-                data = out[0]
-                addr = out[1]
-
-                print data
-                x = 1
+                if data:
+                    #answer = "message received..."
+                    #self.s.sendto(answer, (dest, dest_port))
+                    print "[" + dest + ":" + str(dest_port) + "] :: " + data
+            except:
+                pass
+            
+            message = getLine()
+            if (input != False):
+                self.s.sendto(message, (dest, dest_port))
+       
     def setupServerConn(self):
         self.s.bind((self.host, self.port))
         msg = self.host + ':' + str(self.port) + ':' + str(self.ID)
