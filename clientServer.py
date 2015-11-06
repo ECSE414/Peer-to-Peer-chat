@@ -172,7 +172,7 @@ class Client():
                 pass
             
             message = self.getLine()
-            if (input != False):
+            if (message != False):
                 self.s.sendto(message, (dest, dest_port))
        
     def setupServerConn(self):
