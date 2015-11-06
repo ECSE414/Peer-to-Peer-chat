@@ -171,7 +171,7 @@ class Client():
             except:
                 pass
             
-            message = getLine()
+            message = self.getLine()
             if (input != False):
                 self.s.sendto(message, (dest, dest_port))
        
