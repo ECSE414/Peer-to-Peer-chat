@@ -83,65 +83,6 @@ class Client():
         #self.poller = select.poll()
         self.active = True
 
-    def setupChatRecv(self, dest, dest_port):
-        self.kill()
-        self.active = True
-        self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.s.bind((self.host, self.port))
-        x = 1
-        while 1:
-            while (x == 1):
-                out = self.s.recvfrom(1024)
-                data = out[0]
-                addr = out[1]
-
-                if not data:
-                    break;
-                answer = "message received..."
-                self.s.sendto(answer, (dest, dest_port))
-                print "[" + dest + ":" + str(dest_port) + "] ::" + data
-                x = 0
-            while (x == 0):
-                msg = raw_input('Enter message to send: ')
-
-                self.s.sendto(msg, (dest, dest_port))
-
-                out = self.s.recvfrom(1024)
-                data = out[0]
-                addr = out[1]
-
-                print data
-                print addr
-                x = 1
-    def setupChatSend(self, dest, dest_port):
-        self.kill()
-        self.active = True
-        self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.s.bind((self.host, self.port))
-        x = 0
-        while 1:
-            while (x == 1):
-                out = self.s.recvfrom(1024)
-                data = out[0]
-                addr = out[1]
-
-                if not data:
-                    break;
-                answer = "message received..."
-                self.s.sendto(answer, (dest, dest_port))
-                print "[" + dest + ":" + str(dest_port) + "] ::" + data
-                x = 0
-            while (x == 0):
-                msg = raw_input('Enter message to send: ')
-
-                self.s.sendto(msg, (dest, dest_port))
-
-                out = self.s.recvfrom(1024)
-                data = out[0]
-                addr = out[1]
-
-                print data
-                x = 1
     def getLine(self):
         i,o,e = select.select([sys.stdin],[],[],0.0001)
         for s in i:
@@ -163,7 +104,6 @@ class Client():
                 out = self.s.recvfrom(1024)
                 data = out[0]
                 addr = out[1]
-                print addr
                 if data:
                     #answer = "message received..."
                     #self.s.sendto(answer, (dest, dest_port))
