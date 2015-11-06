@@ -142,7 +142,7 @@ class Client():
 
                 print data
                 x = 1
-    def getLine():
+    def getLine(self):
         i,o,e = select.select([sys.stdin],[],[],0.0001)
         for s in i:
             if s == sys.stdin:
@@ -171,7 +171,7 @@ class Client():
             except:
                 pass
             
-            message = self.getLine()
+            message = getLine()
             if (input != False):
                 self.s.sendto(message, (dest, dest_port))
        
