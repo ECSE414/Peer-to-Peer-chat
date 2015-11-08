@@ -9,7 +9,7 @@ TIMEOUT = 1000
 READ_ONLY = select.POLLIN | select.POLLPRI | select.POLLHUP | select.POLLERR
 READ_WRITE = READ_ONLY | select.POLLOUT
 
-SERVER_IP = '132.206.51.20'  #server IP
+SERVER_IP = '159.203.31.96'  #server IP
 SERVER_PORT = 6000         #server port
 
 def main():
