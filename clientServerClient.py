@@ -4,7 +4,7 @@ import sys
 import select
 
 
-SERVER_IP = 'localhost'  #server IP
+SERVER_IP = '159.203.31.96'  #server IP
 SERVER_PORT = 6000         #server port
 
 def main():
@@ -17,14 +17,14 @@ def main():
         client.ID = num
         #print client.ID
         if client.ID == '1':
-            client.host = 'localhost'
+            client.host = '142.157.64.34'#my IP, 'localhost' is not translated when passed
             client.port = 5000
             client.setupServerConn()
             to = raw_input('Who would you like to contact?')
             conn = client.requestBuddy(to)
             client.setupChatSend(conn[0], int(conn[1]))
         elif client.ID == '2':
-            client.host = 'localhost'
+            client.host = '142.157.64.34'
             client.port = 8000
             client.setupServerConn()
             to = raw_input('Who would you like to contact?')
@@ -156,6 +156,7 @@ class Client():
        print 'requested information: ' + data
        result = data.split(':', 1)
        return result
+
     def kill(self):
         self.active = False
         self.s.close()
