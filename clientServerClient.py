@@ -17,14 +17,14 @@ def main():
         client.ID = num
         #print client.ID
         if client.ID == '1':
-            client.host = '142.157.64.34'#my IP, 'localhost' is not translated when passed
+            client.host = '132.206.51.22'#my IP, 'localhost' is not translated when passed
             client.port = 5000
             client.setupServerConn()
             to = raw_input('Who would you like to contact?')
             conn = client.requestBuddy(to)
             client.setupChatSend(conn[0], int(conn[1]))
         elif client.ID == '2':
-            client.host = '142.157.64.34'
+            client.host = '132.206.51.20'
             client.port = 8000
             client.setupServerConn()
             to = raw_input('Who would you like to contact?')
