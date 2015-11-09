@@ -125,7 +125,7 @@ class Client():
         print msg
         self.s.sendto(msg,(SERVER_IP, SERVER_PORT))
         
-        out = self.s.recvfrom(1024)
+        out = self.s.recvfrom(2048)
         print "out is " + out
             
         data = out[0]
