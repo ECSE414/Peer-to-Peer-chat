@@ -33,6 +33,7 @@ def main():
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.connect(('google.com', 0))
             client.host = s.getsockname()[0]
+            print client.host
             s.close()
             client.port = 8000
             client.setupServerConn()
