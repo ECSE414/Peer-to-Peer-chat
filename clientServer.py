@@ -122,7 +122,13 @@ class Client():
         msg = str(self.ID) + ':' + self.host + ':' + str(self.port)
         self.s.sendto(msg,(SERVER_IP, SERVER_PORT))
         
-        out = self.s.recvfrom(1024)
+        while 1:
+            out = self.s.recvfrom(1024)
+            if out != None:
+                print "out is " + out
+                break
+            
+            
         data = out[0]
         addr = out[1]
 
