@@ -67,7 +67,8 @@ class Server():
             send_to = self.for_table[result[0]].split(':')
             print send_to[0]
             print send_to[1]
-            s.sendto(answer, (send_to[0], int(send_to[1])))
+            #s.sendto(answer, (send_to[0], int(send_to[1])))
+            s.sendto(answer, self.addr)
             #print int(result[1])
             
             print "[" + self.addr[0] + ":" + str(self.addr[1]) + "] :: " + data
@@ -120,7 +121,7 @@ class Client():
     def setupServerConn(self):
         print self.host
         print self.port
-        self.s.bind(('', self.port))
+        self.s.bind((self.host, self.port))
         msg = str(self.ID) + ':' + self.host + ':' + str(self.port)
         print msg
         self.s.sendto(msg,(SERVER_IP, SERVER_PORT))
