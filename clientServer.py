@@ -30,7 +30,10 @@ def main():
             conn = client.requestBuddy(to)
             client.setupChat(conn[0], int(conn[1]))
         elif client.ID == '2':
-            client.host = socket.gethostbyname(socket.gethostname())
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(('google.com', 0))
+            client.host = s.getsockname()[0]
+            s.close()
             client.port = 8000
             client.setupServerConn()
             to = raw_input('Who would you like to contact?')
