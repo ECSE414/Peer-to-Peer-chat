@@ -122,6 +122,7 @@ class Client():
         print self.port
         self.s.bind((self.host, self.port))
         msg = str(self.ID) + ':' + self.host + ':' + str(self.port)
+        print msg
         self.s.sendto(msg,(SERVER_IP, SERVER_PORT))
         
         out = self.s.recvfrom(1024)
