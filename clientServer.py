@@ -30,11 +30,7 @@ def main():
             conn = client.requestBuddy(to)
             client.setupChat(conn[0], int(conn[1]))
         elif client.ID == '2':
-            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            s.connect(('google.com', 0))
-            client.host = s.getsockname()[0]
-            print client.host
-            s.close()
+            client.host = socket.gethostbyname(socket.gethostname())
             client.port = 8000
             client.setupServerConn()
             to = raw_input('Who would you like to contact?')
@@ -61,15 +57,15 @@ class Server():
             print self.addr
             if not data:
                 break;
-            result = data.split(':', 2)
+            result = data.split(':', 3)
             if data == result[1]:
                 answer = self.for_table[data]
             else:
                 self.for_table[result[0]] = result[1] + ":" + result[2]
                 answer = 'IP...' + result[1] + ' port...' + result[2]
                 
-            
-            s.sendto(answer, (self.addr[0], int(self.addr[1])))
+            send_to = self.for_table[result[0]]
+            s.sendto(answer, (send_to[0], int(send_to[1])))
             #print int(result[1])
             
             print "[" + self.addr[0] + ":" + str(self.addr[1]) + "] :: " + data
