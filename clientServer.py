@@ -118,16 +118,14 @@ class Client():
                 self.s.sendto(message, (dest, dest_port))
        
     def setupServerConn(self):
+        print self.host
+        print self.port
         self.s.bind((self.host, self.port))
         msg = str(self.ID) + ':' + self.host + ':' + str(self.port)
         self.s.sendto(msg,(SERVER_IP, SERVER_PORT))
         
-        while 1:
-            out = self.s.recvfrom(1024)
-            if out != None:
-                print "out is " + out
-                break
-            
+        out = self.s.recvfrom(1024)
+        print "out is " + out
             
         data = out[0]
         addr = out[1]
