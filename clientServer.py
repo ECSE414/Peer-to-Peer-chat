@@ -57,7 +57,7 @@ class Server():
             print self.addr
             if not data:
                 break;
-            result = data.split(':', 3)
+            result = data.split(':')
             if data == result[1]:
                 answer = self.for_table[data]
             else:
@@ -65,6 +65,8 @@ class Server():
                 answer = 'IP...' + result[1] + ' port...' + result[2]
                 
             send_to = self.for_table[result[0]]
+            print send_to[0]
+            print send_to[1]
             s.sendto(answer, (send_to[0], int(send_to[1])))
             #print int(result[1])
             
