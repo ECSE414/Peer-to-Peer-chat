@@ -58,11 +58,11 @@ class Server():
             if not data:
                 break;
             result = data.split(':', 2)
-            if data == result[0]:
+            if data == result[1]:
                 answer = self.for_table[data]
             else:
-                self.for_table[result[2]] = result[0] + ":" + result[1]
-                answer = 'IP...' + result[0] + ' port...' + result[1]
+                self.for_table[result[0]] = result[1] + ":" + result[2]
+                answer = 'IP...' + result[1] + ' port...' + result[2]
                 
             
             s.sendto(answer, (self.addr[0], int(self.addr[1])))
@@ -117,7 +117,7 @@ class Client():
        
     def setupServerConn(self):
         self.s.bind((self.host, self.port))
-        msg = self.host + ':' + str(self.port) + ':' + str(self.ID)
+        msg = str(self.ID) + ':' + self.host + ':' + str(self.port)
         self.s.sendto(msg,(SERVER_IP, SERVER_PORT))
         
         out = self.s.recvfrom(1024)
@@ -128,7 +128,7 @@ class Client():
 
 
     def requestBuddy(self, who):
-       msg = str(who)
+       msg = str(self.ID) + ':' + str(who)
 
        self.s.sendto(msg, (SERVER_IP, SERVER_PORT))
 
