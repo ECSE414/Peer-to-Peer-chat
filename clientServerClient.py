@@ -2,12 +2,14 @@
 import time
 import sys
 import select
-
+from urllib2 import urlopen
 
 SERVER_IP = '159.203.31.96'  #server IP
 SERVER_PORT = 6000         #server port
 
 def main():
+    my_ip = urlopen('http://ip.42.pl/raw').read()
+    print my_ip
     type = raw_input('Please enter your type: ')
     type = type.lower()
     #print type
@@ -17,7 +19,7 @@ def main():
         client.ID = num
         #print client.ID
         if client.ID == '1':
-            client.host = '132.206.51.22'#my IP, 'localhost' is not translated when passed
+            client.host = '132.206.51.22' #IP of linux machine, 'localhost' is not translated when passed
             client.port = 5000
             client.setupServerConn()
             to = raw_input('Who would you like to contact?')
