@@ -54,7 +54,7 @@ class Server():
             out = s.recvfrom(1024)
             data = out[0]
             self.addr = out[1]
-            print addr
+            print self.addr
             if not data:
                 break;
             result = data.split(':', 2)
