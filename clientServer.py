@@ -127,7 +127,7 @@ class Client():
         self.s.sendto(msg,(SERVER_IP, SERVER_PORT))
         
         out = self.s.recvfrom(1024)
-        print "out is " + out
+        #print "out is " + out
             
         data = out[0]
         addr = out[1]
