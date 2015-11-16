@@ -1,5 +1,5 @@
 import socket   #socket for Peer-to-Peer and Client-Server comms.
-import time     
+import time
 import sys      #sys calls
 import select   #import to poll keyboard for press
 import datetime
@@ -11,13 +11,13 @@ def main():
     print socket.gethostbyname(socket.gethostname())
     server = Server()
     server.start()
-    
+
 class Server():
     def __init__(self):
         self.addr = None
         self.active = True
         self.for_table = { '0' : SERVER_IP + ":" + str(SERVER_PORT) };
-        
+
     def start(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.bind((SERVER_IP, SERVER_PORT))
@@ -30,8 +30,8 @@ class Server():
             if not data:
                 break;
             result = data.split(':')
-            if data == result[1]:
-                answer = self.for_table[data]
+            if result[1] in self.for_table:
+                answer = self.for_table[result[1]]
             else:
                 for i in self.for_table.keys():
                     if i == result[0]:
@@ -42,15 +42,15 @@ class Server():
                         answer = 'IP...' + result[1] + ' port...' + result[2]
                 if k == 0:
                     self.for_table[result[0]] = result[1] + ":" + result[2]
-                
-                
+
+
             send_to = self.for_table[result[0]].split(':')
             print send_to[0]
             print send_to[1]
             #s.sendto(answer, (send_to[0], int(send_to[1])))
             s.sendto(answer, self.addr)
             #print int(result[1])
-            
+
             print "[" + self.addr[0] + ":" + str(self.addr[1]) + "] :: " + data
             print self.for_table
     def kill(self):
