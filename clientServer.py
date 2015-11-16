@@ -59,6 +59,7 @@ class Server():
             if not data:
                 break;
             result = data.split(':')
+            print result
             if result[1] in self.for_table:
                 answer = self.for_table[data]
             else:
