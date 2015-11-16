@@ -1,14 +1,17 @@
 ﻿import socket   #socket for Peer-to-Peer and Client-Server comms.
-import time     
+import time
 import sys      #sys calls
 import select   #import to poll keyboard for press
 import datetime
+from urllib2 import urlopen
 
 SERVER_IP = '159.203.31.96'  #server IP
 SERVER_PORT = 6000         #server port
 
 def main():
     print socket.gethostbyname(socket.gethostname())
+    my_ip = urlopen('http://ip.42.pl/raw').read()
+    print my_ip
     num = raw_input('Please enter your numerical id: ')
     client = Client()
     client.ID = num
@@ -54,11 +57,11 @@ class Client():
                     print "[" + dest + ":" + str(dest_port) + "] :: " + data
             except:
                 pass
-            
+
             message = self.getLine()
             if (message != False):
                 self.s.sendto(message, (dest, dest_port))
-       
+
     def setupServerConn(self):
         print self.host
         print self.port
@@ -66,7 +69,7 @@ class Client():
         msg = str(self.ID) + ':' + self.host + ':' + str(self.port)
         print msg
         self.s.sendto(msg,(SERVER_IP, SERVER_PORT))
-        
+
         out = self.s.recvfrom(1024)
         data = out[0]
         addr = out[1]

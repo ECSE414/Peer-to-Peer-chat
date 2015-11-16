@@ -33,7 +33,7 @@ class Server():
             if result[1] in self.for_table:
                 answer = self.for_table[result[1]]
             else:
-                for i in self.for_table.keys():
+                for i in self.for_table:
                     if i == result[0]:
                         answer = 'That numerical ID is taken, please restart the messenger and try again'
                         k = 1
