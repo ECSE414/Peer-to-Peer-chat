@@ -36,17 +36,17 @@ def main():
             to = raw_input('Who would you like to contact?')
             conn = client.requestBuddy(to)
             client.setupChat(conn[0], int(conn[1]))
-            
+
     elif type == 'server':
         server = Server()
         server.start()
-    
+
 class Server():
     def __init__(self):
         self.addr = None
         self.active = True
         self.for_table = { '0' : SERVER_IP + ":" + str(SERVER_PORT) };
-        
+
     def start(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.bind((SERVER_IP, SERVER_PORT))
@@ -55,6 +55,7 @@ class Server():
             data = out[0]
             self.addr = out[1]
             print self.addr
+            print data
             if not data:
                 break;
             result = data.split(':')
@@ -63,14 +64,14 @@ class Server():
             else:
                 self.for_table[result[0]] = result[1] + ":" + result[2]
                 answer = 'IP...' + result[1] + ' port...' + result[2]
-                
+
             send_to = self.for_table[result[0]].split(':')
             print send_to[0]
             print send_to[1]
             #s.sendto(answer, (send_to[0], int(send_to[1])))
             s.sendto(answer, self.addr)
             #print int(result[1])
-            
+
             print "[" + self.addr[0] + ":" + str(self.addr[1]) + "] :: " + data
             print self.for_table
     def kill(self):
@@ -113,11 +114,11 @@ class Client():
                     print "[" + dest + ":" + str(dest_port) + "] :: " + data
             except:
                 pass
-            
+
             message = self.getLine()
             if (message != False):
                 self.s.sendto(message, (dest, dest_port))
-       
+
     def setupServerConn(self):
         print self.host
         print self.port
@@ -125,10 +126,10 @@ class Client():
         msg = str(self.ID) + ':' + self.host + ':' + str(self.port)
         print msg
         self.s.sendto(msg,(SERVER_IP, SERVER_PORT))
-        
+
         out = self.s.recvfrom(1024)
         #print "out is " + out
-            
+
         data = out[0]
         addr = out[1]
 
