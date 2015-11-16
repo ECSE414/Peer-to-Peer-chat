@@ -59,7 +59,7 @@ class Server():
             if not data:
                 break;
             result = data.split(':')
-            if result[1] in for_table.keys():
+            if result[1] in self.for_table:
                 answer = self.for_table[data]
             else:
                 self.for_table[result[0]] = result[1] + ":" + result[2]
