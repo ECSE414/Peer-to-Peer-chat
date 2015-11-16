@@ -61,7 +61,7 @@ class Server():
             result = data.split(':')
             print result
             if result[1] in self.for_table:
-                answer = self.for_table[data]
+                answer = self.for_table[result[1]]
             else:
                 self.for_table[result[0]] = result[1] + ":" + result[2]
                 answer = 'IP...' + result[1] + ' port...' + result[2]
