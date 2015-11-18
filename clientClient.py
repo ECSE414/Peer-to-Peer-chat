@@ -90,9 +90,7 @@ class Client():
         global check
         print self.host
         print self.port
-        #self.s.bind((self.host, self.port))
         self.s.bind((self.host, self.port))
-        self.s.setblocking(False)
         msg = str(self.ID) + ':' + self.host + ':' + str(self.port)
         print msg
         self.s.sendto(msg,(SERVER_IP, SERVER_PORT))

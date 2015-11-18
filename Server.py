@@ -37,7 +37,7 @@ class Server():
                     if i == result[0]:
                         answer = 'That ID is taken, please try again'
                         k = 1
-                        #break
+                        break
                     else:
                         answer = 'IP...' + result[1] + ' port...' + result[2]
                 if k == 0:
