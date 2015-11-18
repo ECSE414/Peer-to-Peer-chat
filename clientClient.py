@@ -7,13 +7,13 @@ from urllib2 import urlopen
 
 SERVER_IP = '159.203.31.96'  #server IP
 SERVER_PORT = 6000         #server port
-check = False
+check = 0
 def main():
     print socket.gethostbyname(socket.gethostname())
     my_ip = urlopen('http://ip.42.pl/raw').read()
     print my_ip
     try:
-        while check == False:
+        while check == 0:
             num = raw_input('Please enter your id: ')
 
             client = Client()
@@ -23,6 +23,7 @@ def main():
             client.host = socket.gethostbyname(socket.gethostname())
             client.port = 8000
             client.setupServerConn()
+
         while 1:
             command = raw_input("Please enter a command: (type /help for help)")
             if command == "/help":
@@ -100,11 +101,12 @@ class Client():
         addr = out[1]
 
         if data == 'That numerical ID is taken, please try again':
-            check = False
+            check = 0
             print data
             return None
-        check = True
-        print 'Your info: ' + data
+        else:
+            check = 1
+            print 'Your info: ' + data
 
     def requestBuddy(self, who):
        msg = str(self.ID) + ':' + str(who)
