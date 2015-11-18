@@ -33,8 +33,10 @@ def main():
                 conn = client.requestBuddy(to)
                 client.setupChat(conn[0], int(conn[1]))
             elif command == "avail":
+                pass
                 #TODO print list
             elif command == "all":
+                pass
                 #TODO print list
             elif command == "exit":
                 exit(0)
