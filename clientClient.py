@@ -61,11 +61,11 @@ class Client():
                 return input
         return False
     def setupChat(self, dest, dest_port):
-        #self.kill()
+        self.kill()
         self.active = True
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        #self.s.bind((self.host, self.port))
-        #self.s.setblocking(False)
+        self.s.bind((self.host, self.port))
+        self.s.setblocking(False)
 
         while 1:
             try:
