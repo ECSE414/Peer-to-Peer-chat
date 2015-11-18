@@ -102,7 +102,7 @@ class Client():
         if data == 'That numerical ID is taken, please try again':
             check = False
             print data
-            return
+            return None
         check = True
         print 'Your info: ' + data
 
