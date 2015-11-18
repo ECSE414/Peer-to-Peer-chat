@@ -100,7 +100,7 @@ class Client():
         data = out[0]
         addr = out[1]
 
-        if data == 'That numerical ID is taken, please try again':
+        if data == 'That ID is taken, please try again':
             check = 0
             print data
             return None
