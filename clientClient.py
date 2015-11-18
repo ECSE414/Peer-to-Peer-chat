@@ -20,8 +20,8 @@ def main():
             client.ID = num
             print client.ID
             #sel_port = raw_input('Please enter a port number greater than 2000: ')
-            #client.host = socket.gethostbyname(socket.gethostname())
-            #client.port = 8000
+            client.host = my_ip
+            client.port = 8000
             client.setupServerConn()
         while 1:
             command = raw_input("Please enter a command: (type /help for help)")
@@ -47,8 +47,8 @@ def main():
 
 class Client():
     def __init__(self):
-        self.host = urlopen('http://ip.42.pl/raw').read()
-        self.port = 8000
+        self.host = None
+        self.port = None
         self.ID = None
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.active = True
