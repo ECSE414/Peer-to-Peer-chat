@@ -20,7 +20,7 @@ def main():
             client.ID = num
             print client.ID
             #sel_port = raw_input('Please enter a port number greater than 2000: ')
-            client.host = my_ip
+            client.host = socket.gethostbyname(socket.gethostname())
             client.port = 8000
             client.setupServerConn()
         while 1:
