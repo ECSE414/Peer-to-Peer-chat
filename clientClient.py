@@ -73,7 +73,7 @@ def main():
                 while not to:
                     to = client.getLine()
                 conn = client.requestBuddy(to)
-                client.sendto(client.ID, (conn[0], int(conn[1])))
+                client.s.sendto(client.ID, (conn[0], int(conn[1])))
                 client.setupChat(conn[0], int(conn[1]))
                 printed = False
             elif command == "avail\n":
