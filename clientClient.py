@@ -51,6 +51,7 @@ def main():
 
             command = client.getLine()
             if (command != False):
+                print command
                 if command == "/help":
                     print "| req\t::\t'Request a Buddy'\t|\n| avail\t::\t'See available users'\t|\n| all\t::\t'See all users'\t|\n| exit\t::\t'Exit the application'\t|"
                 elif command == "req":
