@@ -51,13 +51,12 @@ class Server():
             elif result[1] == '-4':
                 answer = str(self.for_table.keys())
             else:
+                answer = 'IP...' + result[1] + ' port...' + result[2]
                 for i in self.for_table:
                     if i == result[0]:
                         answer = 'That ID is taken, please try again'
                         k = 1
                         break
-                    else:
-                        answer = 'IP...' + result[1] + ' port...' + result[2]
                 if k == 0:
                     self.for_table[result[0]] = result[1] + ":" + result[2]
                     self.avail[result[0]] = result[1] + ":" + result[2]
