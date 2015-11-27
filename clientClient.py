@@ -122,8 +122,9 @@ class Client():
         #self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         #self.s.bind((self.host, self.port))
         #self.s.setblocking(False)
-
         while 1:
+            print dest
+            print dest_port
             try:
                 try:
                     out = self.s.recvfrom(1024)
