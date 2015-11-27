@@ -94,6 +94,7 @@ def main():
             elif command == "exit\n":
                 client.s.sendto(str(client.ID) + ":-1", (SERVER_IP,SERVER_PORT))
                 printed = False
+                client.s.kill()
                 exit(0)
             else:
                 print "Invalid command (type /help for help)"
@@ -122,9 +123,9 @@ class Client():
         #self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         #self.s.bind((self.host, self.port))
         #self.s.setblocking(False)
+        print dest
+        print dest_port
         while 1:
-            print dest
-            print dest_port
             try:
                 try:
                     out = self.s.recvfrom(1024)
