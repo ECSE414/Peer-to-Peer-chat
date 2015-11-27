@@ -32,6 +32,7 @@ class Server():
             if not data:
                 break;
             result = data.split(':')
+            print result
             self.avail[result[0]] = str(addr[0]) + ':' + str(addr[1])
             if result[1] in self.for_table:
                 del self.avail[result[0]]
