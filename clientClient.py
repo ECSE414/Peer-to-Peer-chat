@@ -48,7 +48,7 @@ def main():
                 if answer == "y\n":
                     client.setupChat(conn[0], int(conn[1]))
                 else:
-                    client.s.sendto("connection denied: ctrl+C to exit to menu", (conn[0], int(conn[1]))
+                    client.s.sendto("connection denied: ctrl+C to exit to menu", (conn[0], int(conn[1])))
         except:
             client.s.setblocking(True)
             pass
