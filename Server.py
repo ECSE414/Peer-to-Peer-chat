@@ -31,6 +31,7 @@ class Server():
             print addr
             if not data:
                 break;
+            print data
             result = data.split(':')
             print result
             self.avail[result[0]] = str(addr[0]) + ':' + str(addr[1])
