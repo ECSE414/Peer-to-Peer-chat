@@ -35,21 +35,21 @@ def main():
         if not printed:
             print "Please enter a command: (type /help for help)"
             printed = True
-        try:
-            out = self.s.recvfrom(1024)
-            data = out[0]
-            addr = out[1]
-            print data
-            received = data.split(':')
-            if data:
-                answer = raw_input("Request from " + str(data+ " do you want to accept? (y/n)"))
-                conn = client.requestBuddy(data)
-                if answer == "y":
-                    client.setupChat(conn[0], int(conn[1]))
-                else:
-                    client.s.sendto("connection denied: ctrl+C to exit to menu")
-        except:
-            pass
+        #try:
+        out = self.s.recvfrom(1024)
+        data = out[0]
+        addr = out[1]
+        print data
+        received = data.split(':')
+        if data:
+            answer = raw_input("Request from " + str(data)+ " do you want to accept? (y/n)")
+            conn = client.requestBuddy(data)
+            if answer == "y":
+                client.setupChat(conn[0], int(conn[1]))
+            else:
+                client.s.sendto("connection denied: ctrl+C to exit to menu")
+        #except:
+            #pass
 
         command = client.getLine()
         if (command != False):
