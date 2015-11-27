@@ -65,9 +65,9 @@ class Server():
                     self.for_table[result[0]] = result[1] + ":" + result[2]
                     self.avail[result[0]] = result[1] + ":" + result[2]
 
-            send_to = self.for_table[result[0]].split(':')
-            print send_to[0]
-            print send_to[1]
+            #send_to = self.for_table[result[0]].split(':')
+            #print send_to[0]
+            #print send_to[1]
             #s.sendto(answer, (send_to[0], int(send_to[1])))
             if send == True:
                 s.sendto(answer, addr)
