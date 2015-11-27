@@ -46,6 +46,7 @@ def main():
             answer = raw_input("Request from " + str(data)+ " do you want to accept? (y/n)")
             conn = client.requestBuddy(data)
             if answer == "y\n":
+                print "answer was good"
                 client.setupChat(conn[0], int(conn[1]))
             else:
                 client.s.sendto("connection denied: ctrl+C to exit to menu", (conn[0], int(conn[1])))
