@@ -3,6 +3,7 @@ import time
 import sys      #sys calls
 import select   #import to poll keyboard for press
 import datetime
+import re
 
 SERVER_IP = '159.203.31.96'  #server IP
 SERVER_PORT = 6000         #server port
@@ -32,7 +33,7 @@ class Server():
             if not data:
                 break;
             print data
-            result = data.split(':|\n')
+            result = re.split(':|\n', data)
             print result
             self.avail[result[0]] = str(addr[0]) + ':' + str(addr[1])
             if result[1] in self.for_table:
