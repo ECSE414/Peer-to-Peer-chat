@@ -39,7 +39,7 @@ class Server():
             if result[1] in self.for_table:
                 del self.avail[result[0]]
                 if result[1] in self.avail:
-                    answer = self.result[0]
+                    answer = result[0]
                 else:
                     answer = self.for_table[result[1]]
             elif result[1] == '-1':
