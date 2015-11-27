@@ -122,7 +122,7 @@ class Client():
         self.active = True
         #self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         #self.s.bind((self.host, self.port))
-        #self.s.setblocking(False)
+        self.s.setblocking(False)
         print dest
         print dest_port
         while 1:
@@ -135,8 +135,11 @@ class Client():
                         print "[" + dest + ":" + str(dest_port) + "] :: " + data
                         if data == "connection denied: ctrl+C to exit to menu":
                             dest = None
-                except:
-                    pass
+                except KeyboardInterrupt:
+                    if dest != None:
+                        self.s.sendto("Buddy disconnected", (dest, dest_port))
+                    self.s.sendto(str(self.ID) + ':-2', (SERVER_IP, SERVER_PORT))
+                    return
 
                 message = self.getLine()
                 if (message != False):
