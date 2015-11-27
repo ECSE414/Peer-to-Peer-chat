@@ -12,22 +12,22 @@ def main():
     print socket.gethostbyname(socket.gethostname())
     my_ip = urlopen('http://ip.42.pl/raw').read()
     print my_ip
-        while check == 0:
-            try:
-                num = raw_input('Please enter your id: ')
-                if num == '-1' or num == '-2' or num == '-3' or num == '-4':
-                    print "Invalid ID, try again"
-                    continue
-                client = Client()
-                client.ID = num
-                print client.ID
-                #sel_port = raw_input('Please enter a port number greater than 2000: ')
-                client.host = my_ip
-                client.port = 8000
-                client.s.bind((client.host, client.port))
-                client.setupServerConn()
-            except KeyboardInterrupt:
-                pass
+    while check == 0:
+        try:
+            num = raw_input('Please enter your id: ')
+            if num == '-1' or num == '-2' or num == '-3' or num == '-4':
+                print "Invalid ID, try again"
+                continue
+            client = Client()
+            client.ID = num
+            print client.ID
+            #sel_port = raw_input('Please enter a port number greater than 2000: ')
+            client.host = my_ip
+            client.port = 8000
+            client.s.bind((client.host, client.port))
+            client.setupServerConn()
+        except KeyboardInterrupt:
+            pass
 
         while 1:
             try:
