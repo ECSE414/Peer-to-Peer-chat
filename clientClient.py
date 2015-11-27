@@ -44,8 +44,9 @@ def main():
         received = data.split(':')
         if data:
             answer = raw_input("Request from " + str(data)+ " do you want to accept? (y/n)")
+            print answer
             conn = client.requestBuddy(data)
-            if answer == "y\n":
+            if answer == "y":
                 print "answer was good"
                 client.setupChat(conn[0], int(conn[1]))
             else:
