@@ -36,7 +36,7 @@ def main():
             print "Please enter a command: (type /help for help)"
             printed = True
         #try:
-        client.s.setblocking(False)
+        #client.s.setblocking(False)
         out = client.s.recvfrom(1024)
         data = out[0]
         addr = out[1]
