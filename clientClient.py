@@ -119,9 +119,9 @@ class Client():
     def setupChat(self, dest, dest_port):
         self.kill()
         self.active = True
-        self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        #self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         #self.s.bind((self.host, self.port))
-        self.s.setblocking(False)
+        #self.s.setblocking(False)
 
         while 1:
             try:
@@ -178,6 +178,7 @@ class Client():
 
        print 'requested information: ' + data
        result = data.split(':', 1)
+       print result
        return result
     def kill(self):
         self.active = False
