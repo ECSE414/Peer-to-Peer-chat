@@ -14,7 +14,7 @@ def main():
 
 class Server():
     def __init__(self):
-        self.addr = None
+        self.addr = (SERVER_IP, SERVER_PORT)
         self.active = True
         self.for_table = {  };
         self.avail = {  };
@@ -66,10 +66,10 @@ class Server():
             print send_to[1]
             #s.sendto(answer, (send_to[0], int(send_to[1])))
             if send == True:
-                s.sendto(answer, self.addr)
+                s.sendto(answer, addr)
             #print int(result[1])
 
-            print "[" + self.addr[0] + ":" + str(self.addr[1]) + "] :: " + data
+            print "[" + addr[0] + ":" + str(addr[1]) + "] :: " + data
             print self.for_table
     def kill(self):
         self.active = False
