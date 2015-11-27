@@ -25,6 +25,7 @@ def main():
             client.host = my_ip
             client.port = 8000
             client.s.bind((client.host, client.port))
+            client.s.setblocking(False)
             client.setupServerConn()
         except KeyboardInterrupt:
             pass
@@ -94,7 +95,7 @@ def main():
             elif command == "exit\n":
                 client.s.sendto(str(client.ID) + ":-1", (SERVER_IP,SERVER_PORT))
                 printed = False
-                client.s.kill()
+                client.kill()
                 exit(0)
             else:
                 print "Invalid command (type /help for help)"
@@ -135,11 +136,8 @@ class Client():
                         print "[" + dest + ":" + str(dest_port) + "] :: " + data
                         if data == "connection denied: ctrl+C to exit to menu":
                             dest = None
-                except KeyboardInterrupt:
-                    if dest != None:
-                        self.s.sendto("Buddy disconnected", (dest, dest_port))
-                    self.s.sendto(str(self.ID) + ':-2', (SERVER_IP, SERVER_PORT))
-                    return
+                except:
+                    pass
 
                 message = self.getLine()
                 if (message != False):
