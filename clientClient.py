@@ -38,7 +38,7 @@ def main():
                     addr = out[1]
                     received = data.split(':')
                     if data:
-                        answer = raw_input("Request from " + str(data+ " do you want to accept? (y/n)")
+                        answer = raw_input("Request from " + str(data+ " do you want to accept? (y/n)"))
                         conn = client.requestBuddy(data)
                         if answer == "y":
                             client.setupChat(conn[0], int(conn[1]))
