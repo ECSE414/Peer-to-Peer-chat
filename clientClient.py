@@ -36,6 +36,7 @@ def main():
             print "Please enter a command: (type /help for help)"
             printed = True
         try:
+            client.s.setblocking(False)
             out = client.s.recvfrom(1024)
             data = out[0]
             addr = out[1]
@@ -49,6 +50,7 @@ def main():
                 else:
                     client.s.sendto("connection denied: ctrl+C to exit to menu")
         except:
+            client.s.setblocking(True)
             pass
 
         command = client.getLine()
