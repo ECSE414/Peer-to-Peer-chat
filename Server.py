@@ -33,6 +33,7 @@ class Server():
                 break;
             print data
             result = data.split(':')
+            result = result.split('\n')
             print result
             self.avail[result[0]] = str(addr[0]) + ':' + str(addr[1])
             if result[1] in self.for_table:
