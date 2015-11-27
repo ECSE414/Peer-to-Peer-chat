@@ -31,7 +31,7 @@ def main():
         printed = False
         while 1:
             #try:
-            if !printed:
+            if not printed:
                 print "Please enter a command: (type /help for help)"
                 printed = True
             try:
