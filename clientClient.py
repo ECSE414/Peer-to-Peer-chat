@@ -39,6 +39,7 @@ def main():
             out = self.s.recvfrom(1024)
             data = out[0]
             addr = out[1]
+            print data
             received = data.split(':')
             if data:
                 answer = raw_input("Request from " + str(data+ " do you want to accept? (y/n)"))
