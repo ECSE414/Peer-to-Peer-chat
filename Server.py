@@ -16,12 +16,13 @@ class Server():
     def __init__(self):
         self.addr = None
         self.active = True
-        self.for_table = { '0' : SERVER_IP + ":" + str(SERVER_PORT) };
-
+        self.for_table = {  };
+        self.avail = {  };
     def start(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.bind((SERVER_IP, SERVER_PORT))
         while 1:
+            send = True
             k = 0
             out = s.recvfrom(1024)
             data = out[0]
@@ -30,8 +31,24 @@ class Server():
             if not data:
                 break;
             result = data.split(':')
+            self.avail[result[0]] = str(addr[0]) + ':' + str(addr[1])
             if result[1] in self.for_table:
-                answer = self.for_table[result[1]]
+                del self.avail[result[0]]
+                if result[1] in self.avail:
+                    answer = self.result[0]
+                else:
+                    answer = self.for_table[result[1]]
+            elif result[1] == '-1':
+                del self.for_table[result[0]]
+                del self.avail[result[0]]
+                send = False
+            elif result[1] == '-2':
+                self.avail[result[0]] = str(addr[0]) + ':' + str(addr[1])
+                send = False
+            elif result[1] == '-3':
+                answer = str(self.avail.keys())
+            elif result[1] == '-4':
+                answer = str(self.for_table.keys())
             else:
                 for i in self.for_table:
                     if i == result[0]:
@@ -42,13 +59,14 @@ class Server():
                         answer = 'IP...' + result[1] + ' port...' + result[2]
                 if k == 0:
                     self.for_table[result[0]] = result[1] + ":" + result[2]
-
+                    self.avail[result[0]] = result[1] + ":" + result[2]
 
             send_to = self.for_table[result[0]].split(':')
             print send_to[0]
             print send_to[1]
             #s.sendto(answer, (send_to[0], int(send_to[1])))
-            s.sendto(answer, self.addr)
+            if send == True:
+                s.sendto(answer, self.addr)
             #print int(result[1])
 
             print "[" + self.addr[0] + ":" + str(self.addr[1]) + "] :: " + data

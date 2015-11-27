@@ -12,39 +12,82 @@ def main():
     print socket.gethostbyname(socket.gethostname())
     my_ip = urlopen('http://ip.42.pl/raw').read()
     print my_ip
-    try:
         while check == 0:
-            num = raw_input('Please enter your id: ')
-
-            client = Client()
-            client.ID = num
-            print client.ID
-            #sel_port = raw_input('Please enter a port number greater than 2000: ')
-            client.host = socket.gethostbyname(socket.gethostname())
-            client.port = 8000
-            client.setupServerConn()
+            try:
+                num = raw_input('Please enter your id: ')
+                if num == '-1' or num == '-2' or num == '-3' or num == '-4':
+                    print "Invalid ID, try again"
+                    continue
+                client = Client()
+                client.ID = num
+                print client.ID
+                #sel_port = raw_input('Please enter a port number greater than 2000: ')
+                client.host = my_ip
+                client.port = 8000
+                client.s.bind((client.host, client.port))
+                client.setupServerConn()
+            except KeyboardInterrupt:
+                pass
 
         while 1:
-            command = raw_input("Please enter a command: (type /help for help)")
-            if command == "/help":
-                print "| req :: 'Request a Buddy' |\n| avail :: 'See available users' |\n| all :: 'See all users'|\n| exit :: 'Exit the application'|"
-            elif command == "req":
-                #TODO print list
-                to = raw_input('Who would you like to contact?')
-                conn = client.requestBuddy(to)
-                client.setupChat(conn[0], int(conn[1]))
-            elif command == "avail":
+            try:
+                print "Please enter a command: (type /help for help)"
+                try:
+                    out = self.s.recvfrom(1024)
+                    data = out[0]
+                    addr = out[1]
+                    received = data.split(':')
+                    if data:
+                        answer = raw_input("Request from " + str(data+ " do you want to accept? (y/n)")
+                        conn = client.requestBuddy(data)
+                        if answer == "y":
+                            client.setupChat(conn[0], int(conn[1]))
+                        else:
+                            client.s.sendto("connection denied: ctrl+C to exit to menu")
+                except:
+                    pass
+
+                command = client.getLine()
+                if command == "/help":
+                    print "| req\t::\t'Request a Buddy'\t|\n| avail\t::\t'See available users'\t|\n| all\t::\t'See all users'\t|\n| exit\t::\t'Exit the application'\t|"
+                elif command == "req":
+                    client.s.sendto(str(client.ID) + ':-3', (SERVER_IP, SERVER_PORT))
+                    loop = 1
+                    while loop == 1:
+                        client.s.recvfrom(1024)
+                        data = out[0]
+                        addr = out[1]
+                        print data
+                        loop = 0
+                    print 'Who would you like to contact?'
+                    to = client.getLine()
+                    conn = client.requestBuddy(to)
+                    client.setupChat(conn[0], int(conn[1]))
+                elif command == "avail":
+                    client.s.sendto(str(client.ID) + ':-3', (SERVER_IP, SERVER_PORT))
+                    loop = 1
+                    while loop == 1:
+                        client.s.recvfrom(1024)
+                        data = out[0]
+                        addr = out[1]
+                        print data
+                        loop = 0
+                elif command == "all":
+                    client.s.sendto(str(client.ID) + ':-4', (SERVER_IP, SERVER_PORT))
+                    loop = 1
+                    while loop == 1:
+                        client.s.recvfrom(1024)
+                        data = out[0]
+                        addr = out[1]
+                        print data
+                        loop = 0
+                elif command == "exit":
+                    client.s.sendto(str(client.ID) + ":-1", (SERVER_IP,SERVER_PORT))
+                    exit(0)
+                else:
+                    print "Invalid command (type /help for help)"
+            except KeyboardInterrupt:
                 pass
-                #TODO print list
-            elif command == "all":
-                pass
-                #TODO print list
-            elif command == "exit":
-                exit(0)
-            else:
-                print "Invalid command (type /help for help)"
-    except KeyboardInterrupt:
-        pass
 
 class Client():
     def __init__(self):
@@ -76,6 +119,8 @@ class Client():
                     addr = out[1]
                     if data:
                         print "[" + dest + ":" + str(dest_port) + "] :: " + data
+                        if data == "connection denied: ctrl+C to exit to menu":
+                            dest = None
                 except:
                     pass
 
@@ -83,8 +128,9 @@ class Client():
                 if (message != False):
                     self.s.sendto(message, (dest, dest_port))
             except KeyboardInterrupt:
-                self.s.sendto("Buddy disconnected", (dest, dest_port))
-                #self.s.sendto(str(self.ID) + ':-1', (SERVER_IP, SERVER_PORT))
+                if dest != None:
+                    self.s.sendto("Buddy disconnected", (dest, dest_port))
+                self.s.sendto(str(self.ID) + ':-2', (SERVER_IP, SERVER_PORT))
                 return
 
     def setupServerConn(self):
