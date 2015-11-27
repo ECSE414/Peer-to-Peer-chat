@@ -28,10 +28,12 @@ def main():
             client.setupServerConn()
         except KeyboardInterrupt:
             pass
-
+        printed = False
         while 1:
             #try:
-            print "Please enter a command: (type /help for help)"
+            if !printed:
+                print "Please enter a command: (type /help for help)"
+                printed = True
             try:
                 out = self.s.recvfrom(1024)
                 data = out[0]
@@ -86,6 +88,7 @@ def main():
                 exit(0)
             else:
                 print "Invalid command (type /help for help)"
+                printed = False
             #except KeyboardInterrupt:
             #    pass
 
