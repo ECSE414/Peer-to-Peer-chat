@@ -25,8 +25,8 @@ def main():
             client.host = my_ip
             client.port = 8000
             client.s.bind((client.host, client.port))
-            client.s.setblocking(False)
             client.setupServerConn()
+            client.s.setblocking(False)
         except KeyboardInterrupt:
             pass
     printed = False
