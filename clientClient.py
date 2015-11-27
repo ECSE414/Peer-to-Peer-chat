@@ -65,7 +65,9 @@ def main():
                     print data
                     loop = 0
                 print 'Who would you like to contact?'
-                to = client.getLine()
+                to = False
+                while not to:
+                    to = client.getLine()
                 conn = client.requestBuddy(to)
                 client.setupChat(conn[0], int(conn[1]))
                 printed = False
