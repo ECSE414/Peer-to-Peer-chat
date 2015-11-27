@@ -35,25 +35,25 @@ def main():
         if not printed:
             print "Please enter a command: (type /help for help)"
             printed = True
-        #try:
-        #client.s.setblocking(False)
-        out = client.s.recvfrom(1024)
-        data = out[0]
-        addr = out[1]
-        print data
-        received = data.split(':')
-        if data:
-            answer = raw_input("Request from " + str(data)+ " do you want to accept? (y/n)")
-            print answer
-            conn = client.requestBuddy(data)
-            if answer == "y":
-                print "answer was good"
-                client.setupChat(conn[0], int(conn[1]))
-            else:
-                client.s.sendto("connection denied: ctrl+C to exit to menu", (conn[0], int(conn[1])))
-        #except:
-            #client.s.setblocking(True)
-            #pass
+        try:
+            client.s.setblocking(False)
+            out = client.s.recvfrom(1024)
+            data = out[0]
+            addr = out[1]
+            print data
+            received = data.split(':')
+            if data:
+                answer = raw_input("Request from " + str(data)+ " do you want to accept? (y/n)")
+                print answer
+                conn = client.requestBuddy(data)
+                if answer == "y":
+                    print "answer was good"
+                    client.setupChat(conn[0], int(conn[1]))
+                else:
+                    client.s.sendto("connection denied: ctrl+C to exit to menu", (conn[0], int(conn[1])))
+        except:
+            client.s.setblocking(True)
+            pass
 
         command = client.getLine()
         if (command != False):
@@ -154,7 +154,7 @@ class Client():
                     self.s.sendto(message, (dest, dest_port))
             except KeyboardInterrupt:
                 if dest != None:
-                    self.s.sendto("Buddy disconnected", (dest, dest_port))
+                    self.s.sendto("Buddy disconnected: crt+C to exit to menu", (dest, dest_port))
                 self.s.sendto(str(self.ID) + ':-2', (SERVER_IP, SERVER_PORT))
                 return
 
