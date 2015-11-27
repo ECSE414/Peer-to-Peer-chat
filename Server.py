@@ -27,7 +27,7 @@ class Server():
             out = s.recvfrom(1024)
             data = out[0]
             addr = out[1]
-            answer = None
+            answer = "\0"
             print addr
             if not data:
                 break;
