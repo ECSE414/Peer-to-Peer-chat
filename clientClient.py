@@ -86,7 +86,7 @@ def main():
             elif command == "exit":
                 client.s.sendto(str(client.ID) + ":-1", (SERVER_IP,SERVER_PORT))
                 exit(0)
-            else:
+            elif command == "":
                 print "Invalid command (type /help for help)"
                 printed = False
             #except KeyboardInterrupt:
