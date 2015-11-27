@@ -45,10 +45,10 @@ def main():
             if data:
                 answer = raw_input("Request from " + str(data)+ " do you want to accept? (y/n)")
                 conn = client.requestBuddy(data)
-                if answer == "y":
+                if answer == "y\n":
                     client.setupChat(conn[0], int(conn[1]))
                 else:
-                    client.s.sendto("connection denied: ctrl+C to exit to menu")
+                    client.s.sendto("connection denied: ctrl+C to exit to menu", (conn[0], int(conn[1]))
         except:
             client.s.setblocking(True)
             pass
@@ -73,6 +73,7 @@ def main():
                 while not to:
                     to = client.getLine()
                 conn = client.requestBuddy(to)
+                client.sendto(client.ID, (conn[0], int(conn[1])))
                 client.setupChat(conn[0], int(conn[1]))
                 printed = False
             elif command == "avail\n":
@@ -129,10 +130,14 @@ class Client():
         self.s.setblocking(False)
         print dest
         print dest_port
+        chat = True
         while 1:
             try:
                 try:
                     out = self.s.recvfrom(1024)
+                    if chat:
+                        print "chat started"
+                        chat = false
                     data = out[0]
                     addr = out[1]
                     if data:
