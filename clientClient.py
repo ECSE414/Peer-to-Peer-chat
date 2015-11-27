@@ -52,9 +52,9 @@ def main():
             command = client.getLine()
             if (command != False):
                 print command
-                if command == "/help":
+                if command == "/help\n":
                     print "| req\t::\t'Request a Buddy'\t|\n| avail\t::\t'See available users'\t|\n| all\t::\t'See all users'\t|\n| exit\t::\t'Exit the application'\t|"
-                elif command == "req":
+                elif command == "req\n":
                     client.s.sendto(str(client.ID) + ':-3', (SERVER_IP, SERVER_PORT))
                     loop = 1
                     while loop == 1:
@@ -67,7 +67,7 @@ def main():
                     to = client.getLine()
                     conn = client.requestBuddy(to)
                     client.setupChat(conn[0], int(conn[1]))
-                elif command == "avail":
+                elif command == "avail\n":
                     client.s.sendto(str(client.ID) + ':-3', (SERVER_IP, SERVER_PORT))
                     loop = 1
                     while loop == 1:
@@ -76,7 +76,7 @@ def main():
                         addr = out[1]
                         print data
                         loop = 0
-                elif command == "all":
+                elif command == "all\n":
                     client.s.sendto(str(client.ID) + ':-4', (SERVER_IP, SERVER_PORT))
                     loop = 1
                     while loop == 1:
@@ -85,7 +85,7 @@ def main():
                         addr = out[1]
                         print data
                         loop = 0
-                elif command == "exit":
+                elif command == "exit\n":
                     client.s.sendto(str(client.ID) + ":-1", (SERVER_IP,SERVER_PORT))
                     exit(0)
                 else:
