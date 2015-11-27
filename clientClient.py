@@ -120,7 +120,7 @@ class Client():
         self.kill()
         self.active = True
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.s.bind((self.host, self.port))
+        #self.s.bind((self.host, self.port))
         self.s.setblocking(False)
 
         while 1:

@@ -36,10 +36,11 @@ class Server():
             result = re.split(':|\n', data)
             print result
             self.avail[result[0]] = str(addr[0]) + ':' + str(addr[1])
+
             if result[1] in self.for_table:
                 del self.avail[result[0]]
                 if result[1] in self.avail:
-                    answer = result[0]
+                    answer = result[1]
                 else:
                     answer = self.for_table[result[1]]
             elif result[1] == '-1':
