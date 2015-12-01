@@ -86,6 +86,7 @@ def main():
                     if data[0] == "connection denied: returning to main menu":
                         dest = None
                         client.s.sendto(str(client.ID) + ':-2', (SERVER_IP, SERVER_PORT))
+                        printed = False
                         continue
                     client.setupChat(conn[0], int(conn[1]))
                     printed = False
