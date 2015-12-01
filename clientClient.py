@@ -36,7 +36,7 @@ def main():
             print "Please enter a command: (type /help for help)"
             printed = True
         try:
-            #client.s.setblocking(False)
+            client.s.setblocking(False)
             out = client.s.recvfrom(1024)
             data = out[0]
             addr = out[1]
@@ -52,7 +52,7 @@ def main():
                 else:
                     client.s.sendto("connection denied: ctrl+C to exit to menu", (conn[0], int(conn[1])))
         except:
-            #client.s.setblocking(True)
+            client.s.setblocking(True)
             pass
 
         command = client.getLine()
@@ -180,8 +180,8 @@ class Client():
             print 'Your info: ' + data
 
     def requestBuddy(self, who):
+       self.s.setblocking(True)
        msg = str(self.ID) + ':' + str(who)
-
        self.s.sendto(msg, (SERVER_IP, SERVER_PORT))
 
        out = self.s.recvfrom(1024)
