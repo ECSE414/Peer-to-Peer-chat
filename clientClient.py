@@ -83,6 +83,10 @@ def main():
                     client.s.setblocking(True)
                     data = client.s.recvfrom(1024)
                     print(data[0])
+                    if data[0] == "connection denied: returning to main menu":
+                        dest = None
+                        client.s.sendto(str(client.ID) + ':-2', (SERVER_IP, SERVER_PORT))
+                        continue
                     client.setupChat(conn[0], int(conn[1]))
                     printed = False
                 elif command == "avail\n":
@@ -150,10 +154,7 @@ class Client():
                     addr = out[1]
                     if data:
                         print "[" + dest + ":" + str(dest_port) + "] :: " + data
-                        if data == "connection denied: returning to main menu":
-                            dest = None
-                            self.s.sendto(str(self.ID) + ':-2', (SERVER_IP, SERVER_PORT))
-                            return
+
                         elif data == "Buddy disconnected: returning to main menu":
                             dest = None
                             self.s.sendto(str(self.ID) + ':-2', (SERVER_IP, SERVER_PORT))
