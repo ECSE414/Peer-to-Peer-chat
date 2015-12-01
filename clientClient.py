@@ -8,7 +8,7 @@ from urllib2 import urlopen
 SERVER_IP = '159.203.31.96'  #server IP
 SERVER_PORT = 6000         #server port
 check = 0
-NO_NAME = "%-1,"
+NO_NAME = '%-1,'
 def main():
     print socket.gethostbyname(socket.gethostname())
     my_ip = urlopen('http://ip.42.pl/raw').read()

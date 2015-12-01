@@ -7,7 +7,7 @@ import re
 
 SERVER_IP = '159.203.31.96'  #server IP
 SERVER_PORT = 6000         #server port
-
+NO_NAME = '%-1,'
 def main():
     print socket.gethostbyname(socket.gethostname())
     server = Server()
