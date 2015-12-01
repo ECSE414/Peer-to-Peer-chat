@@ -57,7 +57,11 @@ class Server():
             else:
                 answer = 'IP...' + result[1] + ' port...' + result[2]
                 for i in self.for_table:
-                    if i == result[0] or (result[0] in NO_NAME):
+                    if result[0] in NO_NAME:
+                        answer = 'That ID is taken, please try again'
+                        k = 1
+                        break
+                    if i == result[0]:
                         answer = 'That ID is taken, please try again'
                         k = 1
                         break
