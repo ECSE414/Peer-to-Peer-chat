@@ -37,7 +37,7 @@ class Server():
             print result
             self.avail[result[0]] = str(addr[0]) + ':' + str(addr[1])
 
-            if result[0] in self.for_table:
+            if result[1] in self.for_table:
                 if result[1] in self.avail:
                     del self.avail[result[0]]
                     answer = self.avail[result[1]]
@@ -58,7 +58,7 @@ class Server():
                 answer = 'IP...' + result[1] + ' port...' + result[2]
                 for i in self.for_table:
                     if i == result[0] or result[0] == NO_NAME:
-                        answer = 'That ID is taken, please try again'
+                        answer = NO_NAME
                         k = 1
                         break
                 if k == 0:
