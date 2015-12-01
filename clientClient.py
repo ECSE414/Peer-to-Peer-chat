@@ -64,7 +64,7 @@ def main():
             if (command != False):
                 print command
                 if command == "/help\n":
-                    print "| req\t::\t'Request a Buddy'\t|\n| avail\t::\t'See available users'\t|\n| all\t::\t'See all users'\t|\n| exit\t::\t'Exit the application'\t|"
+                    print "| req\t::\t'Request a Buddy'\t|\n| avail\t::\t'See available users'\t|\n| all\t::\t'See all users'\t\t|\n| exit\t::\t'Exit the application'\t|"
                     printed = False
                 elif command == "req\n":
                     client.s.sendto(str(client.ID) + ':-3', (SERVER_IP, SERVER_PORT))
@@ -170,6 +170,7 @@ class Client():
                 if dest != None:
                     self.s.sendto("Buddy disconnected: returning to main menu", (dest, dest_port))
                 self.s.sendto(str(self.ID) + ':-2', (SERVER_IP, SERVER_PORT))
+                print()
                 return
 
     def setupServerConn(self):
