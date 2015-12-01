@@ -154,8 +154,7 @@ class Client():
                     addr = out[1]
                     if data:
                         print "[" + dest + ":" + str(dest_port) + "] :: " + data
-
-                        elif data == "Buddy disconnected: returning to main menu":
+                        if data == "Buddy disconnected: returning to main menu":
                             dest = None
                             self.s.sendto(str(self.ID) + ':-2', (SERVER_IP, SERVER_PORT))
                             return
