@@ -109,6 +109,7 @@ def main():
                     print "Invalid command (type /help for help)"
                     printed = False
         except KeyboardInterrupt:
+            printed = False
             pass
 
 class Client():
