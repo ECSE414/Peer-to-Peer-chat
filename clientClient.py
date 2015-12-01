@@ -8,6 +8,7 @@ from urllib2 import urlopen
 SERVER_IP = '159.203.31.96'  #server IP
 SERVER_PORT = 6000         #server port
 check = 0
+NO_NAME = "%-1,"
 def main():
     print socket.gethostbyname(socket.gethostname())
     my_ip = urlopen('http://ip.42.pl/raw').read()
@@ -15,7 +16,7 @@ def main():
     while check == 0:
         try:
             num = raw_input('Please enter your id: ')
-            if num == '-1' or num == '-2' or num == '-3' or num == '-4':
+            if num == '-1' or num == '-2' or num == '-3' or num == '-4' or num == NO_NAME:
                 print "Invalid ID, try again"
                 continue
             client = Client()
@@ -82,6 +83,9 @@ def main():
                         printed = False
                         continue
                     conn = client.requestBuddy(to)
+                    if conn == NO_NAME:
+                        printed = False
+                        continue
                     client.s.sendto(client.ID, (conn[0], int(conn[1])))
                     client.s.setblocking(True)
                     data = client.s.recvfrom(1024)
@@ -188,7 +192,7 @@ class Client():
         data = out[0]
         addr = out[1]
 
-        if data == 'That ID is taken, please try again':
+        if data == NO_NAME:
             check = 0
             print data
             return None
