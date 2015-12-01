@@ -50,7 +50,7 @@ def main():
                     print "answer was good"
                     client.setupChat(conn[0], int(conn[1]))
                 else:
-                    client.s.sendto("connection denied: ctrl+C to exit to menu", (conn[0], int(conn[1])))
+                    client.s.sendto("connection denied: returning main menu", (conn[0], int(conn[1])))
         except:
             client.s.setblocking(True)
             pass
@@ -144,7 +144,7 @@ class Client():
                     addr = out[1]
                     if data:
                         print "[" + dest + ":" + str(dest_port) + "] :: " + data
-                        if data == "connection denied: ctrl+C to exit to menu":
+                        if data == "connection denied: returning to main menu":
                             dest = None
                         elif data == "Buddy disconnected: returning to main menu":
                             dest = None
