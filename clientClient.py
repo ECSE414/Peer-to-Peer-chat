@@ -50,7 +50,7 @@ def main():
                     print "answer was good"
                     client.setupChat(conn[0], int(conn[1]))
                 else:
-                    client.s.sendto("connection denied: returning main menu", (conn[0], int(conn[1])))
+                    client.s.sendto("connection denied: returning to main menu", (conn[0], int(conn[1])))
                     printed = False
         except:
             client.s.setblocking(True)
