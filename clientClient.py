@@ -110,6 +110,7 @@ def main():
                     printed = False
         except KeyboardInterrupt:
             printed = False
+            print()
             pass
 
 class Client():
