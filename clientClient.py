@@ -211,7 +211,7 @@ class Client():
        addr = out[1]
 
        print 'requested information: ' + data
-       if data = NO_NAME:
+       if data == NO_NAME:
            return data
        result = data.split(':', 1)
        print result
