@@ -149,6 +149,7 @@ class Client():
                         elif data == "Buddy disconnected: returning to main menu":
                             dest = None
                             self.s.sendto(str(self.ID) + ':-2', (SERVER_IP, SERVER_PORT))
+                            return
                 except:
                     pass
 
