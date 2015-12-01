@@ -8,6 +8,7 @@ from urllib2 import urlopen
 SERVER_IP = '159.203.31.96'  #server IP
 SERVER_PORT = 6000         #server port
 check = 0
+NO_NAME = "%-1,"
 def main():
     print socket.gethostbyname(socket.gethostname())
     my_ip = urlopen('http://ip.42.pl/raw').read()
@@ -62,7 +63,6 @@ def main():
 
             command = client.getLine()
             if (command != False):
-                print command
                 if command == "/help\n":
                     print "| req\t::\t'Request a Buddy'\t|\n| avail\t::\t'See available users'\t|\n| all\t::\t'See all users'\t\t|\n| exit\t::\t'Exit the application'\t|"
                     printed = False
@@ -79,7 +79,13 @@ def main():
                     to = False
                     while not to:
                         to = client.getLine()
+                    if to == client.ID:
+                        printed = False
+                        continue
                     conn = client.requestBuddy(to)
+                    if conn == NO_NAME:
+                        printed = False
+                        continue
                     client.s.sendto(client.ID, (conn[0], int(conn[1])))
                     client.s.setblocking(True)
                     data = client.s.recvfrom(1024)
@@ -205,8 +211,10 @@ class Client():
        addr = out[1]
 
        print 'requested information: ' + data
+       if data == NO_NAME:
+           return NO_NAME
        result = data.split(':', 1)
-       print result
+       #print result
        return result
     def kill(self):
         self.active = False

@@ -7,7 +7,7 @@ import re
 
 SERVER_IP = '159.203.31.96'  #server IP
 SERVER_PORT = 6000         #server port
-
+NO_NAME = "%-1,"
 def main():
     print socket.gethostbyname(socket.gethostname())
     server = Server()
@@ -42,7 +42,7 @@ class Server():
                 if result[1] in self.avail:
                     answer = self.avail[result[1]]
                 else:
-                    answer = self.for_table[result[1]]
+                    answer = NO_NAME
             elif result[1] == '-1':
                 del self.for_table[result[0]]
                 del self.avail[result[0]]
@@ -57,7 +57,7 @@ class Server():
             else:
                 answer = 'IP...' + result[1] + ' port...' + result[2]
                 for i in self.for_table:
-                    if i == result[0]:
+                    if i == result[0] or i = NO_NAME:
                         answer = 'That ID is taken, please try again'
                         k = 1
                         break
