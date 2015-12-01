@@ -51,7 +51,7 @@ def main():
                     client.setupChat(conn[0], int(conn[1]))
                 else:
                     client.s.sendto("connection denied: returning to main menu", (conn[0], int(conn[1])))
-                    self.s.sendto(str(self.ID) + ':-2', (SERVER_IP, SERVER_PORT))
+                    client.s.sendto(str(self.ID) + ':-2', (SERVER_IP, SERVER_PORT))
                     printed = False
         except:
             client.s.setblocking(True)
