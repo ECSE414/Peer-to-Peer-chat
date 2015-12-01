@@ -146,6 +146,9 @@ class Client():
                         print "[" + dest + ":" + str(dest_port) + "] :: " + data
                         if data == "connection denied: ctrl+C to exit to menu":
                             dest = None
+                        elif data == "Buddy disconnected: returning to main menu":
+                            dest = None
+                            self.s.sendto(str(self.ID) + ':-2', (SERVER_IP, SERVER_PORT))
                 except:
                     pass
 
@@ -154,7 +157,7 @@ class Client():
                     self.s.sendto(message, (dest, dest_port))
             except KeyboardInterrupt:
                 if dest != None:
-                    self.s.sendto("Buddy disconnected: crt+C to exit to menu", (dest, dest_port))
+                    self.s.sendto("Buddy disconnected: returning to main menu", (dest, dest_port))
                 self.s.sendto(str(self.ID) + ':-2', (SERVER_IP, SERVER_PORT))
                 return
 
