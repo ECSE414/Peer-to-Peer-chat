@@ -49,7 +49,7 @@ def main():
                     if answer == "y":
                         print "answer was good"
                         print "chat started"
-                        client.sendto("Chat request accepted", (conn[0], int(conn[1])))
+                        client.s.sendto("Chat request accepted", (conn[0], int(conn[1])))
                         client.setupChat(conn[0], int(conn[1]))
                     else:
                         client.s.sendto("connection denied: returning to main menu", (conn[0], int(conn[1])))
