@@ -141,9 +141,9 @@ class Client():
             try:
                 try:
                     out = self.s.recvfrom(1024)
-                    #if chat:
-                    #    print "chat started"
-                    #    chat = false
+                    if chat:
+                        print "chat started"
+                        chat = False
                     data = out[0]
                     addr = out[1]
                     if data:
