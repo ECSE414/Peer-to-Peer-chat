@@ -48,6 +48,8 @@ def main():
                     conn = client.requestBuddy(data)
                     if answer == "y":
                         print "answer was good"
+                        print "chat started"
+                        client.sendto("Chat request accepted", (conn[0], int(conn[1])))
                         client.setupChat(conn[0], int(conn[1]))
                     else:
                         client.s.sendto("connection denied: returning to main menu", (conn[0], int(conn[1])))
@@ -78,6 +80,9 @@ def main():
                         to = client.getLine()
                     conn = client.requestBuddy(to)
                     client.s.sendto(client.ID, (conn[0], int(conn[1])))
+                    client.s.setblocking(True)
+                    data = client.s.recvfrom(1024)
+                    print(data[0])
                     client.setupChat(conn[0], int(conn[1]))
                     printed = False
                 elif command == "avail\n":
@@ -141,9 +146,6 @@ class Client():
             try:
                 try:
                     out = self.s.recvfrom(1024)
-                    if chat:
-                        print "chat started"
-                        chat = False
                     data = out[0]
                     addr = out[1]
                     if data:
