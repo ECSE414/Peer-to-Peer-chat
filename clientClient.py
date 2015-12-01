@@ -147,6 +147,7 @@ class Client():
                         print "[" + dest + ":" + str(dest_port) + "] :: " + data
                         if data == "connection denied: returning to main menu":
                             dest = None
+                            self.s.sendto(str(self.ID) + ':-2', (SERVER_IP, SERVER_PORT))
                             return
                         elif data == "Buddy disconnected: returning to main menu":
                             dest = None
