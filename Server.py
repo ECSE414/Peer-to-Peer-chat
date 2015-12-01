@@ -37,9 +37,9 @@ class Server():
             print result
             self.avail[result[0]] = str(addr[0]) + ':' + str(addr[1])
 
-            if result[1] in self.for_table:
-                del self.avail[result[0]]
+            if result[0] in self.for_table:
                 if result[1] in self.avail:
+                    del self.avail[result[0]]
                     answer = self.avail[result[1]]
                 else:
                     answer = NO_NAME
