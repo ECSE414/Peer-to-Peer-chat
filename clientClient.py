@@ -108,8 +108,8 @@ def main():
                 else:
                     print "Invalid command (type /help for help)"
                     printed = False
-            except KeyboardInterrupt:
-                pass
+        except KeyboardInterrupt:
+            pass
 
 class Client():
     def __init__(self):
