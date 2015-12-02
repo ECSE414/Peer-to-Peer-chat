@@ -26,8 +26,10 @@ def main():
         enter_ID()  #get users input
     while 1:
         try:
-            to_recv()       #check to see if data is to be received
-            command_ready() #check to see if command is ready to be accepted
+            ret = to_recv()       #check to see if data is to be received
+            ret = command_ready() #check to see if command is ready to be accepted
+            if ret == False:
+                continue
         except KeyboardInterrupt:
             printed = False
             print()
@@ -42,17 +44,16 @@ def enter_ID():
             continue
         client.ID = num
         print client.ID
-        #sel_port = raw_input('Please enter a port number greater than 2000: ')
         client.host = my_ip
         client.port = 8000
         client.s.bind((client.host, client.port))
         client.setupServerConn()
-        #client.s.setblocking(False)
     except KeyboardInterrupt:
         pass
 
 def to_recv():
     global client
+    global printed
     if not printed:
         print "Please enter a command: (type /help for help)"
         printed = True
@@ -103,11 +104,11 @@ def command_ready():
                 to = client.getLine()
             if to == client.ID:
                 printed = False
-                continue
+                return False
             conn = client.requestBuddy(to)
             if conn == NO_NAME:
                 printed = False
-                continue
+                return = False
             client.s.sendto(client.ID, (conn[0], int(conn[1])))
             client.s.setblocking(True)
             data = client.s.recvfrom(1024)
@@ -116,7 +117,7 @@ def command_ready():
                 dest = None
                 client.s.sendto(str(client.ID) + ':-2', (SERVER_IP, SERVER_PORT))
                 printed = False
-                continue
+                return = False
             client.setupChat(conn[0], int(conn[1]))
             printed = False
         elif command == "avail\n":
