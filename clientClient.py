@@ -21,7 +21,7 @@ def main():
     global printed
     #print socket.gethostbyname(socket.gethostname())
     my_ip = urlopen('http://ip.42.pl/raw').read()
-    print my_ip
+    #print my_ip
     client = Client()
     while check == 0:
         ret = enter_ID(my_ip)  #get users input
@@ -49,7 +49,7 @@ def enter_ID(my_ip):
             print "Invalid ID, try again"
             return False
         client.ID = num
-        print client.ID
+        #print client.ID
         client.host = my_ip
         client.port = 8000
         client.s.bind((client.host, client.port))
@@ -66,14 +66,14 @@ def to_recv():
         out = client.s.recvfrom(1024)
         data = out[0]
         addr = out[1]
-        print data
+        #print data
         received = data.split(':')
         if data:
             answer = raw_input("Request from " + str(data)+ " do you want to accept? (y/n)")
-            print answer
+            #print answer
             conn = client.requestBuddy(data)
             if answer == "y":
-                print "answer was good"
+                #print "answer was good"
                 print "chat started"
                 client.s.sendto("Chat request accepted", (conn[0], int(conn[1])))
                 client.setupChat(conn[0], int(conn[1]))
@@ -101,7 +101,7 @@ def command_ready():
                 out = client.s.recvfrom(1024)
                 data = out[0]
                 addr = out[1]
-                print data
+                #print data
                 loop = 0
             print 'Who would you like to contact?'
             to = False
@@ -118,7 +118,7 @@ def command_ready():
             client.s.sendto(client.ID, (conn[0], int(conn[1])))
             client.s.setblocking(True)
             data = client.s.recvfrom(1024)
-            print(data[0])
+            #print(data[0])
             if data[0] == "connection denied: returning to main menu":
                 dest = None
                 client.s.sendto(str(client.ID) + ':-2', (SERVER_IP, SERVER_PORT))
@@ -143,7 +143,7 @@ def command_ready():
                 out = client.s.recvfrom(1024)
                 data = out[0]
                 addr = out[1]
-                print data
+                #print data
                 loop = 0
             printed = False
         elif command == "exit\n":
@@ -176,8 +176,8 @@ class Client():
         #self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         #self.s.bind((self.host, self.port))
         self.s.setblocking(False)
-        print dest
-        print dest_port
+        #print dest
+        #print dest_port
         chat = True
         while 1:
             try:
@@ -206,11 +206,11 @@ class Client():
 
     def setupServerConn(self):
         global check
-        print self.host
-        print self.port
+        #print self.host
+        #print self.port
         #self.s.bind((self.host, self.port))
         msg = str(self.ID) + ':' + self.host + ':' + str(self.port)
-        print msg
+        #print msg
         self.s.sendto(msg,(SERVER_IP, SERVER_PORT))
 
         out = self.s.recvfrom(1024)
@@ -241,7 +241,7 @@ class Client():
        if data == NO_NAME:
            return data
        result = data.split(':', 1)
-       print result
+       #print result
        return result
     def kill(self):
         self.active = False
