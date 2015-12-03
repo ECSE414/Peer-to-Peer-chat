@@ -18,6 +18,7 @@ RESV3 = '-3'
 RESV4 = '-4'
 def main():
     global client
+    global printed
     #print socket.gethostbyname(socket.gethostname())
     my_ip = urlopen('http://ip.42.pl/raw').read()
     print my_ip
