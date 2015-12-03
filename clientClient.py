@@ -10,7 +10,7 @@ SERVER_PORT = 6000          #server port
 check = 0                   #valid ID check
 printed = False             #something to print check
 
-client
+client = None
 NO_NAME = '%-1,'            #resevered character sequences
 RESV1 = '-1'
 RESV2 = '-2'
