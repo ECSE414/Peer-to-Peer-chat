@@ -53,9 +53,8 @@ def enter_ID(my_ip):
         client.host = my_ip
         client.port = 8000
         client.s.bind((client.host, client.port))
-        ret = client.setupServerConn()
-        if ret == False:
-            client.s.close()
+        client.setupServerConn()
+
     except KeyboardInterrupt:
         pass
 
@@ -220,7 +219,8 @@ class Client():
         if data == NO_NAME:
             check = 0
             print 'That ID is taken, try again'
-            return False
+            self.s.close()
+            return None
         else:
             check = 1
             print 'Your info: ' + data
