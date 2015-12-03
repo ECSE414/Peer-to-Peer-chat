@@ -104,18 +104,18 @@ def command_ready():
             to = False
             while not to:
                 to = client.getLine()
+            print to
             if to == client.ID:
-                print('hiuwehf')
                 printed = False
                 return False
             else:
-                conn = client.requestBuddy(to)
-                if conn == NO_NAME:
-                    printed = False
-                    return False
-                client.s.sendto(client.ID, (conn[0], int(conn[1])))
-                client.s.setblocking(True)
-                data = client.s.recvfrom(1024)
+            conn = client.requestBuddy(to)
+            if conn == NO_NAME:
+                printed = False
+                return False
+            client.s.sendto(client.ID, (conn[0], int(conn[1])))
+            client.s.setblocking(True)
+            data = client.s.recvfrom(1024)
             print(data[0])
             if data[0] == "connection denied: returning to main menu":
                 dest = None
