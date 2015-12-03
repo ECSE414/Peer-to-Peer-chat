@@ -108,7 +108,7 @@ def command_ready():
             conn = client.requestBuddy(to)
             if conn == NO_NAME:
                 printed = False
-                return = False
+                return False
             client.s.sendto(client.ID, (conn[0], int(conn[1])))
             client.s.setblocking(True)
             data = client.s.recvfrom(1024)
@@ -117,7 +117,7 @@ def command_ready():
                 dest = None
                 client.s.sendto(str(client.ID) + ':-2', (SERVER_IP, SERVER_PORT))
                 printed = False
-                return = False
+                return False
             client.setupChat(conn[0], int(conn[1]))
             printed = False
         elif command == "avail\n":
