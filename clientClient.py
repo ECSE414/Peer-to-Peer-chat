@@ -101,7 +101,7 @@ def command_ready():
                 out = client.s.recvfrom(1024)
                 data = out[0]
                 addr = out[1]
-                #print data
+                print data
                 loop = 0
             print 'Who would you like to contact?'
             to = False
