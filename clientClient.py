@@ -118,7 +118,7 @@ def command_ready():
             client.s.sendto(client.ID, (conn[0], int(conn[1])))
             client.s.setblocking(True)
             data = client.s.recvfrom(1024)
-            #print(data[0])
+            print(data[0])
             if data[0] == "connection denied: returning to main menu":
                 dest = None
                 client.s.sendto(str(client.ID) + ':-2', (SERVER_IP, SERVER_PORT))
