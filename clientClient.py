@@ -47,14 +47,15 @@ def enter_ID(my_ip):
         num = raw_input('Please enter your id: ')
         if num == '-1' or num == '-2' or num == '-3' or num == '-4' or num == NO_NAME:
             print "Invalid ID, try again"
-            client.s.kill()
             return False
         client.ID = num
         print client.ID
         client.host = my_ip
         client.port = 8000
         client.s.bind((client.host, client.port))
-        client.setupServerConn()
+        ret = client.setupServerConn()
+        if ret == False:
+            client.s.close()
     except KeyboardInterrupt:
         pass
 
@@ -219,7 +220,7 @@ class Client():
         if data == NO_NAME:
             check = 0
             print 'That ID is taken, try again'
-            return None
+            return False
         else:
             check = 1
             print 'Your info: ' + data
