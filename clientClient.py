@@ -220,6 +220,7 @@ class Client():
             check = 0
             print 'That ID is taken, try again'
             self.s.close()
+            self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             return None
         else:
             check = 1
