@@ -10,7 +10,7 @@ SERVER_PORT = 6000          #server port
 check = 0                   #valid ID check
 printed = False             #something to print check
 
-client = Client()
+client;
 
 NO_NAME = '%-1,'            #resevered character sequences
 RESV1 = '-1'
@@ -18,10 +18,11 @@ RESV2 = '-2'
 RESV3 = '-3'
 RESV4 = '-4'
 def main():
+    global client
     #print socket.gethostbyname(socket.gethostname())
     my_ip = urlopen('http://ip.42.pl/raw').read()
     print my_ip
-
+    client = Client()
     while check == 0:
         ret = enter_ID()  #get users input
         if ret == False:
