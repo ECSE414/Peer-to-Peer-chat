@@ -23,7 +23,9 @@ def main():
     print my_ip
 
     while check == 0:
-        enter_ID()  #get users input
+        ret = enter_ID()  #get users input
+        if ret == False:
+            continue
     while 1:
         try:
             ret = to_recv()       #check to see if data is to be received
@@ -41,7 +43,7 @@ def enter_ID():
         num = raw_input('Please enter your id: ')
         if num == '-1' or num == '-2' or num == '-3' or num == '-4' or num == NO_NAME:
             print "Invalid ID, try again"
-            continue
+            return False
         client.ID = num
         print client.ID
         client.host = my_ip
