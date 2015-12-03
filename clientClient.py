@@ -107,13 +107,14 @@ def command_ready():
             if to == client.ID:
                 printed = False
                 return False
-            conn = client.requestBuddy(to)
-            if conn == NO_NAME:
-                printed = False
-                return False
-            client.s.sendto(client.ID, (conn[0], int(conn[1])))
-            client.s.setblocking(True)
-            data = client.s.recvfrom(1024)
+            else:
+                conn = client.requestBuddy(to)
+                if conn == NO_NAME:
+                    printed = False
+                    return False
+                client.s.sendto(client.ID, (conn[0], int(conn[1])))
+                client.s.setblocking(True)
+                data = client.s.recvfrom(1024)
             print(data[0])
             if data[0] == "connection denied: returning to main menu":
                 dest = None
