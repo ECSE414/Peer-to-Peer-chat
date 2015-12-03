@@ -47,6 +47,7 @@ def enter_ID(my_ip):
         num = raw_input('Please enter your id: ')
         if num == '-1' or num == '-2' or num == '-3' or num == '-4' or num == NO_NAME:
             print "Invalid ID, try again"
+            client.s.kill()
             return False
         client.ID = num
         print client.ID
