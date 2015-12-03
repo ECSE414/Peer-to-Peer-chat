@@ -105,6 +105,7 @@ def command_ready():
             while not to:
                 to = client.getLine()
             if to == client.ID:
+                print('hiuwehf')
                 printed = False
                 return False
             else:
