@@ -28,6 +28,9 @@ def main():
             continue
     while 1:
         try:
+            if not printed:
+                print "Please enter a command: (type /help for help)"
+                printed = True
             ret = to_recv()       #check to see if data is to be received
             ret = command_ready() #check to see if command is ready to be accepted
             if ret == False:
@@ -56,9 +59,6 @@ def enter_ID(my_ip):
 def to_recv():
     global client
     global printed
-    if not printed:
-        print "Please enter a command: (type /help for help)"
-        printed = True
     try:
         client.s.setblocking(False)
         out = client.s.recvfrom(1024)
