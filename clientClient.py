@@ -88,6 +88,7 @@ def to_recv():
 
 def command_ready():
     global client
+    global printed
     command = client.getLine()
     if (command != False):
         if command == "/help\n":
