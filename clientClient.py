@@ -104,11 +104,10 @@ def command_ready():
             to = False
             while not to:
                 to = client.getLine()
-            print to
-            if to == client.ID:
+            check = to.split('\n')
+            if check[0] == client.ID:
                 printed = False
                 return False
-            else:
             conn = client.requestBuddy(to)
             if conn == NO_NAME:
                 printed = False
