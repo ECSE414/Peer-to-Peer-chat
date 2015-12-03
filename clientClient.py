@@ -21,7 +21,7 @@ def main():
     #print socket.gethostbyname(socket.gethostname())
     my_ip = urlopen('http://ip.42.pl/raw').read()
     print my_ip
-    client = Client()
+    client = Client(my_ip)
     while check == 0:
         ret = enter_ID()  #get users input
         if ret == False:
@@ -37,7 +37,7 @@ def main():
             print()
             pass
 
-def enter_ID():
+def enter_ID(my_ip):
     global client
     try:
         num = raw_input('Please enter your id: ')
