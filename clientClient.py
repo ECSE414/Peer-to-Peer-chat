@@ -21,9 +21,9 @@ def main():
     #print socket.gethostbyname(socket.gethostname())
     my_ip = urlopen('http://ip.42.pl/raw').read()
     print my_ip
-    client = Client(my_ip)
+    client = Client()
     while check == 0:
-        ret = enter_ID()  #get users input
+        ret = enter_ID(my_ip)  #get users input
         if ret == False:
             continue
     while 1:
