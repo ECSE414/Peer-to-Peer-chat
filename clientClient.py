@@ -123,7 +123,6 @@ def command_ready():
             #print list of available users
             print data
             listed = re.split('\[|\'|,|\]|\n', data)
-            print(listed)
             #ask user who they want to request
             print 'Who would you like to contact?'
             to = False
@@ -165,7 +164,9 @@ def command_ready():
             #setup the chat
             client.setupChat(conn[0], int(conn[1]))
             printed = False
+        #if avail is requested give user the avail list
         elif command == "avail\n":
+            #send reserved key word
             client.s.sendto(str(client.ID) + ':' + RESV3, (SERVER_IP, SERVER_PORT))
             loop = 1
             while loop == 1:
@@ -175,6 +176,7 @@ def command_ready():
                 print data
                 loop = 0
             printed = False
+        #if all is requested, give u user the all list
         elif command == "all\n":
             client.s.sendto(str(client.ID) + ':' + RESV4, (SERVER_IP, SERVER_PORT))
             loop = 1
@@ -185,6 +187,7 @@ def command_ready():
                 print data
                 loop = 0
             printed = False
+        #if user exits clear socket and leave
         elif command == "exit\n":
             client.s.sendto(str(client.ID) + ':' + RESV1, (SERVER_IP,SERVER_PORT))
             printed = False
@@ -196,12 +199,15 @@ def command_ready():
 
 class Client():
     def __init__(self):
+        #set up info
         self.host = None
         self.port = None
         self.ID = None
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.active = True
-
+    #!
+    # Function takes a line of input from user (once enter is hit). otherwise false
+    #
     def getLine(self):
         i,o,e = select.select([sys.stdin],[],[],0.0001)
         for s in i:
@@ -209,33 +215,41 @@ class Client():
                 input = sys.stdin.readline()
                 return input
         return False
+    #!
+    # Function setsup the chat and starts it
+    #
     def setupChat(self, dest, dest_port):
         self.s.setblocking(False)
         while 1:
             try:
+                #This try catch handles if data is ready to be received
                 try:
                     out = self.s.recvfrom(1024)
                     data = out[0]
                     addr = out[1]
                     if data:
                         print "[" + dest + ":" + str(dest_port) + "] :: " + data
+                        #if a disconnection is received, exit to main menu
                         if data == "Buddy disconnected: returning to main menu":
                             dest = None
                             self.s.sendto(str(self.ID) + ':' + RESV2, (SERVER_IP, SERVER_PORT))
                             return
                 except:
                     pass
-
+                #if user entered message take it and send
                 message = self.getLine()
                 if (message != False):
                     self.s.sendto(message, (dest, dest_port))
             except KeyboardInterrupt:
+                #KeyboardInterrupt corresponds to user disconnecting
                 if dest != None:
                     self.s.sendto("Buddy disconnected: returning to main menu", (dest, dest_port))
                 self.s.sendto(str(self.ID) + ':' + RESV2, (SERVER_IP, SERVER_PORT))
                 print()
                 return
-
+    #!
+    # This sets up server and client connection
+    #
     def setupServerConn(self):
         global check
 
@@ -245,7 +259,7 @@ class Client():
         out = self.s.recvfrom(1024)
         data = out[0]
         addr = out[1]
-
+        #checks to see ID entered is valid
         if data == NO_NAME:
             check = 0
             print 'That ID is taken, try again'
@@ -255,7 +269,9 @@ class Client():
         else:
             check = 1
             print 'Your info: ' + data
-
+    #!
+    # Request buddy's info
+    #
     def requestBuddy(self, who):
        self.s.setblocking(True)
        msg = str(self.ID) + ':' + str(who)
@@ -266,7 +282,7 @@ class Client():
        data = out[0]
        addr = out[1]
 
-
+       #if buddy does not exist dont use data
        if data == NO_NAME:
            return data
 
@@ -274,6 +290,7 @@ class Client():
        result = data.split(':', 1)
        #print result
        return result
+   #close and kill port
     def kill(self):
         self.active = False
         self.s.close()
