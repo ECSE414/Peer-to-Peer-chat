@@ -4,6 +4,7 @@ import sys      #sys calls
 import select   #import to poll keyboard for press
 import datetime
 from urllib2 import urlopen #used to get your IP
+import re
 
 SERVER_IP = '159.203.31.96'  #server IP
 SERVER_PORT = 6000          #server port
@@ -120,7 +121,8 @@ def command_ready():
             addr = out[1]
             #print list of available users
             print data
-            listed = re.split('[|\'|,')
+            listed = re.split('\[|\'|,|\]|\n', data)
+            print(listed)
             #ask user who they want to request
             print 'Who would you like to contact?'
             to = False
@@ -129,11 +131,15 @@ def command_ready():
                 to = client.getLine()
             check = to.split('\n')
             #make sure that user did not request theirself
+            avail = False
             for i in listed:
-                if listed == check[0]
+                if listed == check[0]:
+                    avail = True
+                    break
+            if check[0] == client.ID:
                 printed = False
                 return False
-            if check[0] == client.ID:
+            if avail == False:
                 printed = False
                 return False
             #request information of user
