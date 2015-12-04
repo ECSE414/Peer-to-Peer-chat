@@ -79,8 +79,11 @@ def to_recv():
         #retreive data and senders information
         data = out[0]
         addr = out[1]
+        if data ==  RESV5:
+            data = client.s.recvfrom(1024)
         #if data recveived is valid then ask if user wants to accept connection
         if data:
+            if
             answer = raw_input("Request from " + str(data)+ " do you want to accept? (y/n)")
             conn = client.requestBuddy(data)
             if answer == "y":
@@ -156,7 +159,10 @@ def command_ready():
             client.s.sendto(client.ID, (conn[0], int(conn[1])))
             client.s.setblocking(True)
             #block and wait for recv
-            data = client.s.recvfrom(1024)
+            data[0] = client.s.recvfrom(1024)
+            if data[0] ==  RESV5:
+                data = client.s.recvfrom(1024)
+
             print(data[0])
             #if connection was not accepted add back to avail list and return to menu
             if data[0] == "connection denied: returning to main menu":
