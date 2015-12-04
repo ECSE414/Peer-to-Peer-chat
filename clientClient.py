@@ -15,10 +15,9 @@ printed = False             #something to print check
 client = None               #globally accessible client
 NO_NAME = '%-1,'            #resevered character sequences
 RESV1 = '-1'                #Exit
-RESV2 = '-2'
-RESV3 = '-3'
-RESV4 = '-4'
-RESV5 = 't4cT'
+RESV2 = '-2'                #Add to avail
+RESV3 = '-3'                #print avail
+RESV4 = '-4'                #print all
 def main():
     global client
     global printed
