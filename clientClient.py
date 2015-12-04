@@ -83,7 +83,6 @@ def to_recv():
             data = client.s.recvfrom(1024)
         #if data recveived is valid then ask if user wants to accept connection
         if data:
-            if
             answer = raw_input("Request from " + str(data)+ " do you want to accept? (y/n)")
             conn = client.requestBuddy(data)
             if answer == "y":
