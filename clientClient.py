@@ -134,6 +134,7 @@ def command_ready():
             avail = False
             for i in listed:
                 if listed == check[0]:
+                    print ("hello")
                     avail = True
                     break
             if check[0] == client.ID:
