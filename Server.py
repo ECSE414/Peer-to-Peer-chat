@@ -83,8 +83,8 @@ class Server():
                         add = 1
                         break
                 if add == 0:
-                    self.for_table[result[0]] = result[1] + ":" + result[2]
-                    self.avail[result[0]] = result[1] + ":" + result[2]
+                    self.for_table[result[0]] = addr[0] + ":" + addr[1]
+                    self.avail[result[0]] = addr[0] + ":" + addr[1]
             #if data to send, send.
             if send == True:
                 s.sendto(answer, addr)
