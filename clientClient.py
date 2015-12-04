@@ -79,8 +79,6 @@ def to_recv():
         #retreive data and senders information
         data = out[0]
         addr = out[1]
-        if data ==  RESV5:
-            data = client.s.recvfrom(1024)
         #if data recveived is valid then ask if user wants to accept connection
         if data:
             answer = raw_input("Request from " + str(data)+ " do you want to accept? (y/n)")
@@ -88,14 +86,12 @@ def to_recv():
             if answer == "y":
                 print "chat started"
                 #Send accept message to user who sent request
-                client.s.sendto(RESV5, (conn[5], int(conn[1])))
                 client.s.sendto("Chat request accepted", (conn[0], int(conn[1])))
                 #setup the chat
                 client.setupChat(conn[0], int(conn[1]))
                 printed = False
             else:
                 #if user does not wish to accept. connection is denied.
-                client.s.sendto(RESV5, (conn[5], int(conn[1])))
                 client.s.sendto("connection denied: returning to main menu", (conn[0], int(conn[1])))
                 #add user back to avail list on server.
                 client.s.sendto(str(client.ID) + ':' + RESV2, (SERVER_IP, SERVER_PORT))
@@ -154,13 +150,10 @@ def command_ready():
                 printed = False
                 return False
             #send my ID to client who I wish to contact
-            client.s.sendto(RESV5, (conn[5], int(conn[1])))
             client.s.sendto(client.ID, (conn[0], int(conn[1])))
             client.s.setblocking(True)
             #block and wait for recv
-            data[0] = client.s.recvfrom(1024)
-            if data[0] ==  RESV5:
-                data = client.s.recvfrom(1024)
+            data = client.s.recvfrom(1024)
 
             print(data[0])
             #if connection was not accepted add back to avail list and return to menu
