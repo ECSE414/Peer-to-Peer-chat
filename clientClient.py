@@ -133,7 +133,7 @@ def command_ready():
             #make sure that user did not request theirself
             avail = False
             for i in listed:
-                if listed == check[0]:
+                if i == check[0]:
                     print ("hello")
                     avail = True
                     break
