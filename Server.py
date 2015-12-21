@@ -13,7 +13,7 @@ RESV2 = '-2'
 RESV3 = '-3'
 RESV4 = '-4'
 def main():
-    print socket.gethostbyname(socket.gethostname())
+    #print socket.gethostbyname(socket.gethostname())
     #start server
     server = Server()
     server.start()
@@ -57,6 +57,7 @@ class Server():
                     answer = self.avail[result[1]]
                 else:
                     answer = self.for_table[result[1]]
+                send = True
             #if RESV code 1 was sent...exit and delete entries
             elif result[1] == RESV1:
                 del self.for_table[result[0]]
@@ -69,20 +70,21 @@ class Server():
             #if RESV code 3 was sent, return available users
             elif result[1] == RESV3:
                 answer = str(self.avail.keys())
-            #if RESV code 4 was sent, return all users
+            #if RESV code 4 was sent, return all online
             elif result[1] == RESV4:
                 answer = str(self.for_table.keys())
-            #else means its a new entry to the fortable, so update or reject if ID is taken
+            #else means its a new entry to the forwarding table, so update or reject if ID is taken
             else:
                 answer = 'IP...' + result[1] + ' port...' + result[2]
                 for i in self.for_table:
+                    #if ID is taken return invalid seq
                     if i == result[0]:
                         answer = NO_NAME
                         add = 1
                         break
                 if add == 0:
-                    self.for_table[result[0]] = result[1] + ":" + result[2]
-                    self.avail[result[0]] = result[1] + ":" + result[2]
+                    self.for_table[result[0]] = addr[0] + ":" + addr[1]
+                    self.avail[result[0]] = addr[0] + ":" + addr[1]
             #if data to send, send.
             if send == True:
                 s.sendto(answer, addr)
