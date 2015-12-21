@@ -21,7 +21,7 @@ RESV4 = '-4'                #print all
 def main():
     global client
     global printed
-    my_ip = urlopen('http://ip.42.pl/raw').read()   #Get IP
+    my_ip = ''   #Get IP
     client = Client()                               #created client
     while check == 0:                               #while ID is not entered
         ret = enter_ID(my_ip)                       #get users ID
